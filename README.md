@@ -52,9 +52,9 @@
 
 3. 类图与结构图
 
-    <img src="https://github.com/Sarofc/BehaviorTree-Unity/blob/master/src/cd.jpg?raw=true"></br>
+    <img src="https://github.com/Sarofc/BehaviorTree-Unity/blob/master/src/cd.JPG?raw=true" width=50%></br>
 
-    <img src="https://github.com/Sarofc/BehaviorTree-Unity/blob/master/src/structure.jpg?raw=true">
+    <img src="https://github.com/Sarofc/BehaviorTree-Unity/blob/master/src/structure.JPG?raw=true" width=50%>
 
 4. 定义自己的节点
 
@@ -111,7 +111,7 @@ bb.Get<bool>("key2").Value;
 
 >> ## TODO
 
-- [ ] 完善节点（包含断点）
+- [ ] 完善节点
 - [ ] 完善Debug工具
 - [ ] ？编辑器
 
