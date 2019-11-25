@@ -21,10 +21,13 @@ namespace Saro.BT
 
         public Container ParentContainerNode { get => m_parentContainerNode; }
 
-        [Obsolete("Obsolete")]
+        /// <summary>
+        /// User label
+        /// </summary>
+        [Obsolete("User Label, TODO")]
         public string Label { get => m_label; set => m_label = value; }
         /// <summary>
-        /// Node Name
+        /// Node name
         /// </summary>
         public string Name { get => m_name; set => m_name = value; }
 
@@ -128,7 +131,7 @@ namespace Saro.BT
         /// <param name="composite"></param>
         protected virtual void InternalParentCompositeStopped(Composite composite)
         {
-
+            // Do nothing in base class
         }
 
         protected string GetPath()
@@ -143,14 +146,14 @@ namespace Saro.BT
         /// <summary>
         /// static description, call once
         /// </summary>
-        /// <returns></returns>
+        /// <returns>static string</returns>
         public virtual string GetStaticDescription() { return Name; }
 
         /// <summary>
         /// runtime values, need to update
         /// </summary>
         /// <param name="des"></param>
-        /// <returns></returns>
+        /// <returns>runtime string</returns>
         public virtual string DescribeRuntimeValues(StringBuilder des) { return null; }
 
     }

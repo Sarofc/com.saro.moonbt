@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Saro.BT
 {
-    public class BlackboardCondition<T> : Decorator where T : IComparable
+    public class BlackboardCondition<T> : Decorator
     {
         private string m_key;
         private T m_value;
@@ -63,13 +63,45 @@ namespace Saro.BT
                 case Operator.IS_NOT_EQUAL:
                     return !object.Equals(o, m_value);
                 case Operator.IS_GREATER_OR_EQUAL:
-                    return o.CompareTo(m_value) >= 0;
+                    if (o is IComparable)
+                    {
+                        return ((IComparable)o).CompareTo((IComparable)m_value) >= 0;
+                    }
+                    else
+                    {
+                        Debug.LogError($"can't compare t1:{o} t2:{m_value}");
+                        return false;
+                    }
                 case Operator.IS_GREATER:
-                    return o.CompareTo(m_value) > 0;
+                    if (o is IComparable)
+                    {
+                        return ((IComparable)o).CompareTo((IComparable)m_value) > 0;
+                    }
+                    else
+                    {
+                        Debug.LogError($"can't compare t1:{o} t2:{m_value}");
+                        return false;
+                    }
                 case Operator.IS_SMALLER_OR_EQUAL:
-                    return o.CompareTo(m_value) <= 0;
+                    if (o is IComparable)
+                    {
+                        return ((IComparable)o).CompareTo((IComparable)m_value) <= 0;
+                    }
+                    else
+                    {
+                        Debug.LogError($"can't compare t1:{o} t2:{m_value}");
+                        return false;
+                    }
                 case Operator.IS_SMALLER:
-                    return o.CompareTo(m_value) < 0;
+                    if (o is IComparable)
+                    {
+                        return ((IComparable)o).CompareTo((IComparable)m_value) < 0;
+                    }
+                    else
+                    {
+                        Debug.LogError($"can't compare t1:{o} t2:{m_value}");
+                        return false;
+                    }
                 default:
                     return false;
             }
@@ -145,13 +177,45 @@ namespace Saro.BT
     //            case Operator.IS_NOT_EQUAL:
     //                return !object.Equals(o, m_value);
     //            case Operator.IS_GREATER_OR_EQUAL:
-    //                return m_value.CompareTo(o) >= 0;
+    //                if (o is IComparable)
+    //                {
+    //                    return ((IComparable)o).CompareTo((IComparable)m_value) >= 0;
+    //                }
+    //                else
+    //                {
+    //                    Debug.LogError($"can't compare t1:{o} t2:{m_value}");
+    //                    return false;
+    //                }
     //            case Operator.IS_GREATER:
-    //                return m_value.CompareTo(o) > 0;
+    //                if (o is IComparable)
+    //                {
+    //                    return ((IComparable)o).CompareTo((IComparable)m_value) > 0;
+    //                }
+    //                else
+    //                {
+    //                    Debug.LogError($"can't compare t1:{o} t2:{m_value}");
+    //                    return false;
+    //                }
     //            case Operator.IS_SMALLER_OR_EQUAL:
-    //                return m_value.CompareTo(o) <= 0;
+    //                if (o is IComparable)
+    //                {
+    //                    return ((IComparable)o).CompareTo((IComparable)m_value) <= 0;
+    //                }
+    //                else
+    //                {
+    //                    Debug.LogError($"can't compare t1:{o} t2:{m_value}");
+    //                    return false;
+    //                }
     //            case Operator.IS_SMALLER:
-    //                return m_value.CompareTo(o) < 0;
+    //                if (o is IComparable)
+    //                {
+    //                    return ((IComparable)o).CompareTo((IComparable)m_value) < 0;
+    //                }
+    //                else
+    //                {
+    //                    Debug.LogError($"can't compare t1:{o} t2:{m_value}");
+    //                    return false;
+    //                }
     //            default:
     //                return false;
     //        }

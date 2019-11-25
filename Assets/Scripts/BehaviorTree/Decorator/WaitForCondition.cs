@@ -17,7 +17,7 @@ namespace Saro.BT
             this.m_randomDeviation = randomVariance;
 
             this.Label = "" + (checkInterval - randomVariance) + "..." + (checkInterval + randomVariance) + "s";
-            
+
             m_abortNone = false;
             m_abortSelf = false;
             m_abortLowerPriority = false;
@@ -28,7 +28,7 @@ namespace Saro.BT
             this.m_condition = condition;
             this.m_checkInterval = 0.1f;
             this.m_randomDeviation = 0.1f;
-            this.Label = "every tick";
+            //this.Label = "every tick";
 
             m_abortNone = false;
             m_abortSelf = false;
@@ -39,7 +39,7 @@ namespace Saro.BT
         {
             if (!m_condition.Invoke())
             {
-                Clock.AddTimer(m_checkInterval,/* m_checkVariance,*/ -1, checkCondition);
+                Clock.AddTimer(m_checkInterval, -1, checkCondition);
             }
             else
             {

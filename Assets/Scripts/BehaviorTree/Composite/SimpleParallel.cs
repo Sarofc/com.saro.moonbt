@@ -14,6 +14,9 @@ namespace Saro.BT
      retun main task result
     */
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class SimpleParallel : Composite
     {
         public enum FinishMode

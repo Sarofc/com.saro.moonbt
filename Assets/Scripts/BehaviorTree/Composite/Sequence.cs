@@ -3,6 +3,9 @@ using UnityEngine.Assertions;
 
 namespace Saro.BT
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class Sequence : Composite
     {
         private int m_currentIdx = -1;

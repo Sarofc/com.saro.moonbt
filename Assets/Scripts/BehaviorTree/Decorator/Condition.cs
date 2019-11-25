@@ -5,17 +5,11 @@ using System.Text;
 namespace Saro.BT
 {
     /// <summary>
-    /// Coding base
+    /// Coding base, custom condition
     /// </summary>
     public class Condition : ConditionBase
     {
         private Func<bool> m_condition;
-
-        //public Condition(Func<bool> condition)
-        //{
-        //    m_condition = condition;
-        //}
-
 
         public Condition(Func<bool> condition, ObserverAborts aborts = ObserverAborts.NONE, float checkInterval = .1f) : base(aborts, checkInterval)
         {
