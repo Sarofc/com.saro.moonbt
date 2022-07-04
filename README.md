@@ -5,7 +5,7 @@
 
 indev...
 
-<img src="https://github.com/Sarofc/com.saro.moonbt/blob/dev/doc/editor.jpg" width="80%">
+<img src="https://github.com/Sarofc/com.saro.moonbt/blob/main/doc/editor.jpg" width="80%">
 
 ## 一、特性
 
