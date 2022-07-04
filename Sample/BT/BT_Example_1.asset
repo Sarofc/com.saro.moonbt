@@ -1,0 +1,286 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b835c723459bee4584a5a6fd997cdd3, type: 3}
+  m_Name: BT_Example_1
+  m_EditorClassIdentifier: 
+  nodes:
+  - rid: 732278640031301654
+  - rid: 732278669221298176
+  - rid: 732278668036145152
+  - rid: 732278668036145159
+  - rid: 732278668036145153
+  - rid: 732278668036145154
+  - rid: 732278668036145155
+  - rid: 732278668739477516
+  - rid: 732278668739477517
+  - rid: 732278668739477514
+  - rid: 732278668739477515
+  - rid: 732278668036145156
+  - rid: 732278668036145157
+  - rid: 732278668036145158
+  - rid: 732278668739477518
+  - rid: 732278668739477519
+  blackboardData:
+    entries:
+    - keyName: hasSeePlayer
+      keyDesc: 
+      keyType:
+        rid: 732278687441354763
+    - keyName: test_yahaha
+      keyDesc: 
+      keyType:
+        rid: 732278687441354766
+  graphPosition: {x: -42.666668, y: 142.66667, z: 0}
+  graphScale: {x: 0.57175326, y: 0.57175326, z: 1}
+  references:
+    version: 2
+    RefIds:
+    - rid: 732278640031301654
+      type: {class: Loop, ns: Saro.BT, asm: Saro.MoonBT}
+      data:
+        breakPoint: 0
+        nodePosition:
+          serializedVersion: 2
+          x: 207.33333
+          y: 200
+          width: 138.00002
+          height: 92
+        comment: 
+        title: 
+        m_Child: 1
+        abortType: 0
+        loopCount: -1
+    - rid: 732278668036145152
+      type: {class: Selector, ns: Saro.BT, asm: Saro.MoonBT}
+      data:
+        breakPoint: 0
+        nodePosition:
+          serializedVersion: 2
+          x: 533.3333
+          y: 200
+          width: 138
+          height: 92
+        comment: 
+        title: 
+        m_Children: 030000000b000000
+    - rid: 732278668036145153
+      type: {class: Sequence, ns: Saro.BT, asm: Saro.MoonBT}
+      data:
+        breakPoint: 0
+        nodePosition:
+          serializedVersion: 2
+          x: 884
+          y: -53.333332
+          width: 138
+          height: 92
+        comment: "\u8FDB\u653B"
+        title: 
+        m_Children: 050000000600000007000000
+    - rid: 732278668036145154
+      type: {class: PrintLog, ns: Saro.BT, asm: Saro.MoonBT}
+      data:
+        breakPoint: 0
+        nodePosition:
+          serializedVersion: 2
+          x: 1072
+          y: -210
+          width: 107.333374
+          height: 106.66667
+        comment: 
+        title: 
+        message: "\u8FD1\u8EAB"
+        logType: 2
+    - rid: 732278668036145155
+      type: {class: Wait, ns: Saro.BT, asm: Saro.MoonBT}
+      data:
+        breakPoint: 0
+        nodePosition:
+          serializedVersion: 2
+          x: 1072
+          y: -83.33333
+          width: 96.666626
+          height: 92
+        comment: 
+        title: 
+        timer:
+          interval: 2
+          deviation: 0.1
+    - rid: 732278668036145156
+      type: {class: Sequence, ns: Saro.BT, asm: Saro.MoonBT}
+      data:
+        breakPoint: 0
+        nodePosition:
+          serializedVersion: 2
+          x: 721.3333
+          y: 453.33334
+          width: 138
+          height: 91.99997
+        comment: "\u5DE1\u903B"
+        title: 
+        m_Children: 0c0000000d0000000e0000000f000000
+    - rid: 732278668036145157
+      type: {class: PrintLog, ns: Saro.BT, asm: Saro.MoonBT}
+      data:
+        breakPoint: 0
+        nodePosition:
+          serializedVersion: 2
+          x: 909.3333
+          y: 267.33334
+          width: 107.333374
+          height: 106.66666
+        comment: 
+        title: 
+        message: "\u5DE1\u903B"
+        logType: 2
+    - rid: 732278668036145158
+      type: {class: Wait, ns: Saro.BT, asm: Saro.MoonBT}
+      data:
+        breakPoint: 0
+        nodePosition:
+          serializedVersion: 2
+          x: 909.3333
+          y: 394
+          width: 81.333374
+          height: 92
+        comment: 
+        title: 
+        timer:
+          interval: 3
+          deviation: 0
+    - rid: 732278668036145159
+      type: {class: BBCondition, ns: Saro.BT, asm: Saro.MoonBT}
+      data:
+        breakPoint: 0
+        nodePosition:
+          serializedVersion: 2
+          x: 721.3333
+          y: -60
+          width: 138
+          height: 105.333336
+        comment: 
+        title: 
+        m_Child: 4
+        abortType: 1
+        bbKey:
+          keyName: hasSeePlayer
+        keyOperation: 0
+        compareFloat: 0
+        compareInt: 0
+        compareText: 
+    - rid: 732278668739477514
+      type: {class: PrintLog, ns: Saro.BT, asm: Saro.MoonBT}
+      data:
+        breakPoint: 0
+        nodePosition:
+          serializedVersion: 2
+          x: 1439.3334
+          y: 28.666664
+          width: 107.33325
+          height: 106.666664
+        comment: 
+        title: 
+        message: "\u653B\u51FB\uFF01"
+        logType: 2
+    - rid: 732278668739477515
+      type: {class: Wait, ns: Saro.BT, asm: Saro.MoonBT}
+      data:
+        breakPoint: 0
+        nodePosition:
+          serializedVersion: 2
+          x: 1439.3334
+          y: 155.33333
+          width: 95.33325
+          height: 92.000015
+        comment: 
+        title: 
+        timer:
+          interval: 1
+          deviation: 0.1
+    - rid: 732278668739477516
+      type: {class: Cooldown, ns: Saro.BT, asm: Saro.MoonBT}
+      data:
+        breakPoint: 0
+        nodePosition:
+          serializedVersion: 2
+          x: 1072
+          y: 95.33333
+          width: 154
+          height: 92
+        comment: 
+        title: 
+        m_Child: 8
+        abortType: 0
+        timer:
+          interval: 4
+          deviation: 0.1
+    - rid: 732278668739477517
+      type: {class: Sequence, ns: Saro.BT, asm: Saro.MoonBT}
+      data:
+        breakPoint: 0
+        nodePosition:
+          serializedVersion: 2
+          x: 1251.3334
+          y: 95.33333
+          width: 138
+          height: 92
+        comment: 
+        title: 
+        m_Children: 090000000a000000
+    - rid: 732278668739477518
+      type: {class: PrintLog, ns: Saro.BT, asm: Saro.MoonBT}
+      data:
+        breakPoint: 0
+        nodePosition:
+          serializedVersion: 2
+          x: 909.3333
+          y: 506
+          width: 107.333374
+          height: 106.66669
+        comment: 
+        title: 
+        message: "\u4F11\u606F"
+        logType: 2
+    - rid: 732278668739477519
+      type: {class: Wait, ns: Saro.BT, asm: Saro.MoonBT}
+      data:
+        breakPoint: 0
+        nodePosition:
+          serializedVersion: 2
+          x: 909.3333
+          y: 632.6667
+          width: 95.333374
+          height: 92
+        comment: 
+        title: 
+        timer:
+          interval: 1
+          deviation: 0.1
+    - rid: 732278669221298176
+      type: {class: BTS_FindTarget, ns: Saro.BT.Sample, asm: Saro.MoonBT.Sample}
+      data:
+        breakPoint: 0
+        nodePosition:
+          serializedVersion: 2
+          x: 370
+          y: 200
+          width: 138
+          height: 92
+        comment: 
+        title: FindTarget
+        m_Child: 2
+        timer:
+          interval: 10
+          deviation: 0.1
+    - rid: 732278687441354763
+      type: {class: BBKeyType_Bool, ns: Saro.BT, asm: Saro.MoonBT}
+    - rid: 732278687441354766
+      type: {class: BBKeyType_Float, ns: Saro.BT, asm: Saro.MoonBT}

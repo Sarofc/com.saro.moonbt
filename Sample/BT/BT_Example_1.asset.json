@@ -1,0 +1,252 @@
+{
+  "nodes": [
+    {
+      "$type": "Saro.BT.Loop, Saro.MoonBT",
+      "loopCount": -1,
+      "nodePosition": {
+        "x": 218.666672,
+        "y": 200.0,
+        "width": 137.999985,
+        "height": 92.0
+      },
+      "comment": "",
+      "title": "",
+      "m_Child": 1
+    },
+    {
+      "$type": "Saro.BT.Sample.BTService_FindTarget, Saro.MoonBT.Sample",
+      "timer": {
+        "interval": 10.0,
+        "deviation": 0.1
+      },
+      "nodePosition": {
+        "x": 381.333344,
+        "y": 200.0,
+        "width": 137.999969,
+        "height": 92.0
+      },
+      "comment": "",
+      "title": "FindTarget",
+      "m_Child": 2
+    },
+    {
+      "$type": "Saro.BT.Selector, Saro.MoonBT",
+      "nodePosition": {
+        "x": 544.6667,
+        "y": 200.0,
+        "width": 138.0,
+        "height": 92.0
+      },
+      "comment": "",
+      "title": "",
+      "m_Children": [
+        3,
+        11
+      ]
+    },
+    {
+      "$type": "Saro.BT.BBCondition, Saro.MoonBT",
+      "bbKey": {
+        "keyName": "hasSeePlayer"
+      },
+      "compareText": "",
+      "abortType": 1,
+      "nodePosition": {
+        "x": 732.6667,
+        "y": -60.0,
+        "width": 146.0,
+        "height": 105.333336
+      },
+      "comment": "",
+      "title": "",
+      "m_Child": 4
+    },
+    {
+      "$type": "Saro.BT.Sequence, Saro.MoonBT",
+      "nodePosition": {
+        "x": 903.3333,
+        "y": -53.3333321,
+        "width": 138.000061,
+        "height": 92.0
+      },
+      "comment": "",
+      "title": "",
+      "m_Children": [
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "$type": "Saro.BT.PrintLog, Saro.MoonBT",
+      "message": "近身",
+      "logType": 2,
+      "nodePosition": {
+        "x": 1091.33337,
+        "y": -210.0,
+        "width": 118.666626,
+        "height": 106.666672
+      },
+      "comment": "",
+      "title": ""
+    },
+    {
+      "$type": "Saro.BT.Wait, Saro.MoonBT",
+      "timer": {
+        "interval": 2.0,
+        "deviation": 0.1
+      },
+      "nodePosition": {
+        "x": 1091.33337,
+        "y": -83.33333,
+        "width": 96.666626,
+        "height": 92.0
+      },
+      "comment": "",
+      "title": ""
+    },
+    {
+      "$type": "Saro.BT.Cooldown, Saro.MoonBT",
+      "timer": {
+        "interval": 4.0,
+        "deviation": 0.1
+      },
+      "nodePosition": {
+        "x": 1091.33337,
+        "y": 95.33333,
+        "width": 154.0,
+        "height": 92.0
+      },
+      "comment": "",
+      "title": "",
+      "m_Child": 8
+    },
+    {
+      "$type": "Saro.BT.Sequence, Saro.MoonBT",
+      "nodePosition": {
+        "x": 1270.66663,
+        "y": 95.33333,
+        "width": 138.0,
+        "height": 92.0
+      },
+      "comment": "",
+      "title": "",
+      "m_Children": [
+        9,
+        10
+      ]
+    },
+    {
+      "$type": "Saro.BT.PrintLog, Saro.MoonBT",
+      "message": "攻击！",
+      "logType": 2,
+      "nodePosition": {
+        "x": 1458.66663,
+        "y": 28.6666641,
+        "width": 124.666748,
+        "height": 106.666664
+      },
+      "comment": "",
+      "title": ""
+    },
+    {
+      "$type": "Saro.BT.Wait, Saro.MoonBT",
+      "timer": {
+        "interval": 1.0,
+        "deviation": 0.1
+      },
+      "nodePosition": {
+        "x": 1458.66663,
+        "y": 155.333328,
+        "width": 96.66675,
+        "height": 92.0000153
+      },
+      "comment": "",
+      "title": ""
+    },
+    {
+      "$type": "Saro.BT.Sequence, Saro.MoonBT",
+      "nodePosition": {
+        "x": 732.6667,
+        "y": 453.333344,
+        "width": 138.0,
+        "height": 91.99997
+      },
+      "comment": "",
+      "title": "",
+      "m_Children": [
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    {
+      "$type": "Saro.BT.PrintLog, Saro.MoonBT",
+      "message": "巡逻",
+      "logType": 2,
+      "nodePosition": {
+        "x": 920.6667,
+        "y": 267.333344,
+        "width": 124.666687,
+        "height": 106.666656
+      },
+      "comment": "",
+      "title": ""
+    },
+    {
+      "$type": "Saro.BT.Wait, Saro.MoonBT",
+      "timer": {
+        "interval": 3.0
+      },
+      "nodePosition": {
+        "x": 920.6667,
+        "y": 394.0,
+        "width": 98.666626,
+        "height": 92.0
+      },
+      "comment": "",
+      "title": ""
+    },
+    {
+      "$type": "Saro.BT.PrintLog, Saro.MoonBT",
+      "message": "休息",
+      "logType": 2,
+      "nodePosition": {
+        "x": 920.6667,
+        "y": 506.0,
+        "width": 124.666687,
+        "height": 106.666687
+      },
+      "comment": "",
+      "title": ""
+    },
+    {
+      "$type": "Saro.BT.Wait, Saro.MoonBT",
+      "timer": {
+        "interval": 1.0,
+        "deviation": 0.1
+      },
+      "nodePosition": {
+        "x": 920.6667,
+        "y": 632.6667,
+        "width": 98.666626,
+        "height": 92.0
+      },
+      "comment": "",
+      "title": ""
+    }
+  ],
+  "blackboardData": {
+    "entries": [
+      {
+        "keyName": "hasSeePlayer",
+        "keyDesc": "",
+        "keyType": {
+          "$type": "Saro.BT.BBKeyType_Bool, Saro.MoonBT"
+        }
+      }
+    ]
+  },
+  "name": "BT_Example_1"
+}

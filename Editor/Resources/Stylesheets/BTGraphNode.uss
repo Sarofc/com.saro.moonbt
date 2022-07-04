@@ -1,0 +1,19 @@
+.bold-text {
+    -unity-font-style: bold;
+}
+
+BTGraphNode #title {
+    background-color: #375e98;
+}
+
+BTTaskNode #title {
+    background-color: #9B04FF;
+}
+
+BTDecoratorNode #title {
+    background-color: #2C559F;
+}
+
+BTServiceNode #title {
+    background-color: #007672;
+}
