@@ -17,30 +17,7 @@ namespace Saro.BT
 
             if (Blackboard != null)
             {
-                if (value is Variable<int> _int)
-                {
-                    Blackboard.SetValue(bbKey, _int.GetValue());
-                }
-                else if (value is Variable<float> _float)
-                {
-                    Blackboard.SetValue(bbKey, _float.GetValue());
-                }
-                else if (value is Variable<bool> _bool)
-                {
-                    Blackboard.SetValue(bbKey, _bool.GetValue());
-                }
-                else if (value is Variable<string> _string)
-                {
-                    Blackboard.SetValue(bbKey, _string.GetValue());
-                }
-                else if (value is Variable<object> _object)
-                {
-                    Blackboard.SetObjectValue(bbKey, _object.GetValue());
-                }
-                else if (value is Variable<Vector3> _vector3)
-                {
-                    Blackboard.SetValue(bbKey, _vector3.GetValue());
-                }
+                Blackboard.SetValue(bbKey, value);
             }
         }
 

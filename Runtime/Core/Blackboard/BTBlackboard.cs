@@ -77,6 +77,34 @@ namespace Saro.BT
             return Variables[index];
         }
 
+        public void SetValue(string keyName, Variable value)
+        {
+            if (value is Variable<int> _int)
+            {
+                SetValue(keyName, _int.GetValue());
+            }
+            else if (value is Variable<float> _float)
+            {
+                SetValue(keyName, _float.GetValue());
+            }
+            else if (value is Variable<bool> _bool)
+            {
+                SetValue(keyName, _bool.GetValue());
+            }
+            else if (value is Variable<string> _string)
+            {
+                SetValue(keyName, _string.GetValue());
+            }
+            else if (value is Variable<object> _object)
+            {
+                SetObjectValue(keyName, _object.GetValue());
+            }
+            else if (value is Variable<Vector3> _vector3)
+            {
+                SetValue(keyName, _vector3.GetValue());
+            }
+        }
+
         public ref T GetValue<T>(string keyName)
         {
             var index = GetKeyIndexByName(keyName);
