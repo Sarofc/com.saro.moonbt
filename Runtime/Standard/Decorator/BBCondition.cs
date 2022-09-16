@@ -1,11 +1,9 @@
-﻿
-using System;
+﻿using System;
 using System.Text;
-using UnityEngine;
 
 namespace Saro.BT
 {
-    [BTNode("Blackboard_24x")]
+    [BTNode("Blackboard_24x", "‘黑板条件’节点\n节点将判断黑板键的值与给定值之间的关系，根据结果（可以是大于、小于、等于，等等）阻止或允许节点的执行。")]
     public class BBCondition : BTDecorator
     {
         public BBKeySelector bbKey = new();
@@ -14,15 +12,15 @@ namespace Saro.BT
         public byte keyOperation;
 
 #if UNITY_EDITOR
-        [ShowIf(nameof(GetOpType), typeof(BBKeyType_Float))]
+        [ShowIf(nameof(GetOpType), typeof(BBKey_Float))]
 #endif
         public float compareFloat;
 #if UNITY_EDITOR
-        [ShowIf(nameof(GetOpType), typeof(BBKeyType_Int))]
+        [ShowIf(nameof(GetOpType), typeof(BBKey_Int))]
 #endif
         public int compareInt;
 #if UNITY_EDITOR
-        [ShowIf(nameof(GetOpType), typeof(BBKeyType_String))]
+        [ShowIf(nameof(GetOpType), typeof(BBKey_String))]
 #endif
         public string compareText;
 
@@ -54,11 +52,11 @@ namespace Saro.BT
 
             return keyType switch
             {
-                BBKeyType_Bool bbkey => bbkey.TestOperation(Blackboard.GetValue<bool>(keyIndex), keyOperation),
-                BBKeyType_Float bbkey => bbkey.TestOperation(Blackboard.GetValue<float>(keyIndex), keyOperation, compareFloat),
-                BBKeyType_Int bbkey => bbkey.TestOperation(Blackboard.GetValue<int>(keyIndex), keyOperation, compareInt),
-                BBKeyType_String bbkey => bbkey.TestOperation(Blackboard.GetValue<string>(keyIndex), keyOperation, compareText),
-                BBKeyType_Object bbkey => bbkey.TestOperation(Blackboard.GetValue<object>(keyIndex), keyOperation),
+                BBKey_Bool bbkey => bbkey.TestOperation(Blackboard.GetValue<bool>(keyIndex), keyOperation),
+                BBKey_Float bbkey => bbkey.TestOperation(Blackboard.GetValue<float>(keyIndex), keyOperation, compareFloat),
+                BBKey_Int bbkey => bbkey.TestOperation(Blackboard.GetValue<int>(keyIndex), keyOperation, compareInt),
+                BBKey_String bbkey => bbkey.TestOperation(Blackboard.GetValue<string>(keyIndex), keyOperation, compareText),
+                BBKey_Object bbkey => bbkey.TestOperation(Blackboard.GetValue<object>(keyIndex), keyOperation),
                 _ => false,
             };
         }
@@ -103,15 +101,15 @@ namespace Saro.BT
 
             switch (keyType)
             {
-                case BBKeyType_Bool _bool:
-                case BBKeyType_Object _object:
+                case BBKey_Bool _bool:
+                case BBKey_Object _object:
                     {
                         var keyOp = (EBasicKeyOperation)keyOperation;
                         builder.Append(" is ");
                         builder.Append(keyOp);
                     }
                     break;
-                case BBKeyType_Float _flaot:
+                case BBKey_Float _flaot:
                     {
                         var keyOp = (EArithmeticKeyOperation)keyOperation;
                         builder.Append(" ");
@@ -120,7 +118,7 @@ namespace Saro.BT
                         builder.Append(compareFloat);
                     }
                     break;
-                case BBKeyType_Int _int:
+                case BBKey_Int _int:
                     {
                         var keyOp = (EArithmeticKeyOperation)keyOperation;
                         builder.Append(" ");
@@ -129,7 +127,7 @@ namespace Saro.BT
                         builder.Append(compareInt);
                     }
                     break;
-                case BBKeyType_String _string:
+                case BBKey_String _string:
                     {
                         var keyOp = (ETextKeyOperation)keyOperation;
                         builder.Append(" ");
@@ -155,11 +153,11 @@ namespace Saro.BT
 
                 return keyType switch
                 {
-                    BBKeyType_Bool bbkey => typeof(BBKeyType_Bool),
-                    BBKeyType_Float bbkey => typeof(BBKeyType_Float),
-                    BBKeyType_Int bbkey => typeof(BBKeyType_Int),
-                    BBKeyType_String bbkey => typeof(BBKeyType_String),
-                    BBKeyType_Object bbkey => typeof(BBKeyType_Object),
+                    BBKey_Bool bbkey => typeof(BBKey_Bool),
+                    BBKey_Float bbkey => typeof(BBKey_Float),
+                    BBKey_Int bbkey => typeof(BBKey_Int),
+                    BBKey_String bbkey => typeof(BBKey_String),
+                    BBKey_Object bbkey => typeof(BBKey_Object),
                     _ => null,
                 };
             }

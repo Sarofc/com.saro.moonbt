@@ -43,7 +43,9 @@ namespace Saro.BT
         public void SetChildren(BTNode[] nodes)
         {
             if (m_Children == null || m_Children.Length != nodes.Length)
+            {
                 m_Children = new int[nodes.Length];
+            }
 
             for (int i = 0; i < m_Children.Length; i++)
             {

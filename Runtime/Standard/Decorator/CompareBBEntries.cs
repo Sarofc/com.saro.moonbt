@@ -1,7 +1,6 @@
 ﻿
 using System;
 using System.Text;
-using UnityEngine;
 
 namespace Saro.BT
 {
@@ -11,7 +10,7 @@ namespace Saro.BT
         NotEqual,
     }
 
-    [BTNode("Compare_Blackboard_Entries_24x")]
+    [BTNode("Compare_Blackboard_Entries_24x", "‘比较黑板键值’节点\n节点将比较两个黑板键的值，并根据结果（等于或不等）阻止或允许节点的执行。 ")]
     public class CompareBBEntries : BTDecorator
     {
         public EBlackBoardEntryComparison op;

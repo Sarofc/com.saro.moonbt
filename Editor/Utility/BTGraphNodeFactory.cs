@@ -1,4 +1,4 @@
-using System;
+Ôªøusing System;
 using UnityEditor.Experimental.GraphView;
 
 namespace Saro.BT.Designer
@@ -14,6 +14,7 @@ namespace Saro.BT.Designer
 
             BTGraphNode graphNode;
 
+            // ÁâπÊÆäÂ≠êÁ±ªË¶ÅË∑ëÂú®ÂâçÈù¢
             if (type == typeof(Root))
             {
                 graphNode = new BTRootNode();
@@ -22,7 +23,6 @@ namespace Saro.BT.Designer
             {
                 graphNode = new BTSimpleParallelNode();
             }
-            // æﬂÃÂ◊”¿‡–Ë“™∑≈‘⁄«∞√Ê
             else if (type.IsSubclassOf(typeof(BTComposite)))
             {
                 graphNode = new BTCompositeNode();
@@ -35,9 +35,13 @@ namespace Saro.BT.Designer
             {
                 graphNode = new BTServiceNode();
             }
-            else
+            else if(type.IsSubclassOf(typeof(BTTask)))
             {
                 graphNode = new BTTaskNode();
+            }
+            else
+            {
+                throw new Exception($"CreateGraphNode failed. unhandle type: {type}");
             }
 
             graphNode.PostInit(graphView);

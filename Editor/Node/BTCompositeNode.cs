@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Saro.Pool;
@@ -105,7 +105,7 @@ namespace Saro.BT.Designer
 
         public override BTGraphNode GetChildAt(int index)
         {
-            // ChildPort.connections Ê¹ÓÃµÄÊÇÎÞÐòÈÝÆ÷ HashSet£¬ÐèÒªÅÅÐò
+            // ChildPort.connections å­˜å‚¨å®¹å™¨æ˜¯ HashSetï¼Œæ— åº
 
             if (ChildPort.connected)
             {
@@ -120,7 +120,7 @@ namespace Saro.BT.Designer
                     }
 
                     //nodes.Sort((up, down) => up.GetPosition().y.CompareTo(down.GetPosition().y));
-                    nodes.Sort((up, down) => up.style.top.value.value.CompareTo(down.style.top.value.value)); // GetPosition µÄÖµ²»Ò»¶¨ÔÚÕâÒ»Ö¡¸üÐÂ£¬ËùÒÔÊ¹ÓÃ style.top
+                    nodes.Sort((up, down) => up.style.top.value.value.CompareTo(down.style.top.value.value)); // GetPosition åŸºäºŽ style.top
 
                     //Debug.LogError($"{NodeBehavior.Title}'s children:{ string.Join(", ", nodes)}");
 

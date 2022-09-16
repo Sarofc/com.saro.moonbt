@@ -20,28 +20,23 @@ namespace Saro.BT
 
         public override void OnEnter()
         {
-            if (Child != null) Iterator.Traverse(Child);
+            if (Child != null)
+                Iterator.Traverse(Child);
         }
 
-        public sealed override void OnAbort(int childIndex)
-        {
-        }
+        public sealed override void OnAbort(int childIndex) { }
 
         public override void OnParentExit()
         {
             if (Child != null && Child.IsAuxiliary())
-            {
                 Child.OnParentExit();
-            }
         }
 
         public sealed override BTNode GetChildAt(int _ = 0)
             => m_Child > 0 ? Tree.nodes[m_Child] : null; // 前序下，孩子节点不可能是0号元素
 
         public sealed override void SetChildAt(BTNode node, int _ = 0)
-        {
-            m_Child = Array.IndexOf(Tree.nodes, node);
-        }
+            => m_Child = Array.IndexOf(Tree.nodes, node);
 
         public sealed override int ChildCount() => Child != null ? 1 : 0;
 

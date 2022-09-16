@@ -78,13 +78,15 @@ namespace Saro.BT
 #endif
 
                 var node = m_Tree.nodes[i];
-                node.OnEnter();
-
-                INFO($"[{m_Tree.name}] enter <color=green>{node.GetType().Name}: {node.preOrder}</color>");
 
 #if UNITY_EDITOR
                 node.OnBreakpoint();
 #endif
+
+                node.OnEnter();
+
+                INFO($"[{m_Tree.name}] enter <color=green>{node.GetType().Name}: {node.preOrder}</color>");
+
                 OnChildEnter(node);
             }
         }

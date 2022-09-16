@@ -135,7 +135,6 @@ namespace Saro.BT.Designer
             public float lastLeafHeight = 0f;
 
             public const float yLeafSeparation = 20f;
-
             public const float xLevelSeparation = 50f;
         }
     }

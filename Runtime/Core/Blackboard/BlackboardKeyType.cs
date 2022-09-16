@@ -58,7 +58,8 @@ namespace Saro.BT
         public abstract bool TestOperation(T valueA, byte op, T valueB);
     }
 
-    public class BBKeyType_Int : BlackboardKeyType<int>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceClassName: "BBKeyType_Int")]
+    public class BBKey_Int : BlackboardKeyType<int>
     {
         public override bool TestOperation(int valueA, byte op, int valueB)
         {
@@ -75,7 +76,8 @@ namespace Saro.BT
         }
     }
 
-    public class BBKeyType_Float : BlackboardKeyType<float>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceClassName: "BBKeyType_Float")]
+    public class BBKey_Float : BlackboardKeyType<float>
     {
         public override bool TestOperation(float valueA, byte op, float valueB)
         {
@@ -92,7 +94,8 @@ namespace Saro.BT
         }
     }
 
-    public class BBKeyType_Bool : BlackboardKeyType<bool>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceClassName: "BBKeyType_Bool")]
+    public class BBKey_Bool : BlackboardKeyType<bool>
     {
         public override bool TestOperation(bool valueA, byte op, bool _ = false)
         {
@@ -100,7 +103,8 @@ namespace Saro.BT
         }
     }
 
-    public class BBKeyType_String : BlackboardKeyType<string>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceClassName: "BBKeyType_String")]
+    public class BBKey_String : BlackboardKeyType<string>
     {
         public override bool TestOperation(string valueA, byte op, string valueB)
         {
@@ -115,7 +119,8 @@ namespace Saro.BT
         }
     }
 
-    public class BBKeyType_Object : BlackboardKeyType<object>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceClassName: "BBKeyType_Object")]
+    public class BBKey_Object : BlackboardKeyType<object>
     {
         public override bool TestOperation(object valueA, byte op, object _ = null)
         {

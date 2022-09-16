@@ -1,4 +1,4 @@
-using UnityEditor;
+ï»¿using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEditor.UIElements;
@@ -9,18 +9,6 @@ using System.Threading.Tasks;
 
 namespace Saro.BT.Designer
 {
-    /*
-     * TODO 
-     * 
-     * x. ¸ßÁÁ ±»ÖÕÖ¹µÄ½Úµã
-     * x. ½Úµã±à¼­Ãæ°å£¬½ÚµãÏêÇé
-     * 3. ³·Ïú/ÖØ×ö
-     * x. ¿ìËÙÁ¬Ïß£¬Ê¹ÓÃ IEdgeConnectorListener
-     * x. playmode½ûÖ¹±à¼­£¬node½Úµã´íÂÒĞŞÕı
-     * 6. ĞÂÔö·Ö×é£¬·Ö×é±£´æÔÚ TreeAsset Àï
-     * 
-     */
-
     public sealed class BTGraphEditor : EditorWindow
     {
         private const string k_EditorName = "BTGraphEditor";
@@ -238,8 +226,8 @@ namespace Saro.BT.Designer
 
         private async void SelectionChanged()
         {
-            // TODO ½øplaymodeÊ±£¬»á±¨¿Õ£¡µ«ÇĞ»Ø±à¼­Ä£Ê½£¬Ã»ÓĞ±¨¿Õ
-            // OnPlayModeStateChanged / Selection.selectionChanged ¶¼»á±¨¿Õ
+            // TODO playmode åˆ‡æ¢æ—¶ï¼Œä¸èƒ½è‡ªåŠ¨é€‰æ‹©åˆ° ä¸Šä¸€ä¸ªèµ„æº
+            // OnPlayModeStateChanged / Selection.selectionChanged éœ€è¦å»¶è¿Ÿä¸€å¸§
             while (m_BTGraphView == null)
             {
                 await Task.Yield();

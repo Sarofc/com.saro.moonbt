@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -23,12 +23,10 @@ namespace Saro.BT.Designer
         }
 
         public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
-        {
-        }
+        { }
 
         protected override void AddParent()
-        {
-        }
+        { }
 
         protected override void OnSetBehavior()
         {
@@ -45,6 +43,8 @@ namespace Saro.BT.Designer
             }
         }
 
+        public override void OnNodeInspectorGUI() { }
+
         protected override string OnValidate(Stack<BTGraphNode> stack)
         {
             if (!ChildPort.connected)
@@ -54,9 +54,7 @@ namespace Saro.BT.Designer
                 return $"Root's child is null";
             }
             stack.Push(ChildPort.connections.First().input.node as BTGraphNode);
-
             ChildPort.style.backgroundColor = new StyleColor(StyleKeyword.Null);
-
             return null;
         }
 
@@ -77,13 +75,9 @@ namespace Saro.BT.Designer
 
             var editorNodes = TreeTraversal.PreOrder(child).ToArray();
             var nodes = new List<BTNode>();
-            //var order = 0;
             foreach (var node in editorNodes)
             {
                 nodes.Add(node.NodeBehavior);
-                //node.NodeBehavior.preOrder = order;
-                //node.RefreshPreOrder(order);
-                //order++;
             }
 
             tree.graphPosition = GraphView.viewTransform.position;
@@ -101,19 +95,6 @@ namespace Saro.BT.Designer
             if (!ChildPort.connected) return null;
             return ChildPort.connections.First().input.node as BTGraphNode;
         }
-
-        //public override void SetChildAt(BTGraphNode node, int childIndex)
-        //{
-        //    if (ChildPort.connected)
-        //    {
-        //        var oldEdge = ChildPort.connections.First();
-        //        BTGraphView.DisconnectPorts(oldEdge);
-        //        GraphView.RemoveElement(oldEdge);
-        //    }
-
-        //    var newEdge = BTGraphView.ConnectPorts(ChildPort, node.ParentPort);
-        //    GraphView.AddElement(newEdge);
-        //}
 
         public override int ChildCount() => 1;
     }

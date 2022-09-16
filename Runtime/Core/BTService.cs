@@ -1,6 +1,7 @@
 ﻿using System.Text;
 
 using Saro.BT.Utility;
+using UnityEngine;
 
 namespace Saro.BT
 {
@@ -19,7 +20,8 @@ namespace Saro.BT
     {
         [BTRunTimeValue]
         public Timer timer = new();
-        //public bool restartTimerOnEnter = true;
+        [Tooltip("每次进入节点时，重新启动计时器")]
+        public bool restartTimerOnEnter;
 
         public sealed override void OnInitialize()
         {
@@ -33,7 +35,7 @@ namespace Saro.BT
         {
             Tree.AddTimer(timer);
 
-            if (timer.IsDone /*|| restartTimerOnEnter*/)
+            if (timer.IsDone || restartTimerOnEnter)
             {
                 timer.Start();
             }
@@ -56,8 +58,7 @@ namespace Saro.BT
         public override void Description(StringBuilder builder)
         {
             builder.AppendFormat("Tick every {0:0.00} s", timer.GetIntervalInfo());
-
-            //builder.AppendLine(restartTimerOnEnter ? "Restart timer on enter" : "Resume timer on enter");
+            builder.AppendLine(restartTimerOnEnter ? "Restart timer on enter" : "Resume timer on enter");
         }
 
         public sealed override void OnChildEnter(int childIndex) { }

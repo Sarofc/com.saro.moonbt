@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +12,9 @@ namespace Saro.BT.Designer
 {
     /*
      * TODO
-     * 
-     * x. ÏÔÊ¾ ×¢ÊÍ£¿
-     * 2. ÔËĞĞÊ±£¬¶¯Ì¬Êı¾İ£¬ÏÔÊ¾ÔÚnodeÉÏ£¬·½±ãµ÷ÊÔ£¨BTRuntimeValue£©
-     * 
+     *
+     * 1. å°†BTRuntimeValueå®æ—¶æ˜¾ç¤ºåˆ°è¿è¡Œæ—¶guiä¸Š
+     *
      */
     public abstract partial class BTGraphNode : Node, IIterableNode<BTGraphNode>
     {
@@ -34,7 +33,7 @@ namespace Saro.BT.Designer
         private IconBadge m_CommentBadge;
 
         /// <summary>
-        /// ÎªÁË½â¾ö£¬SetPosition ²»Á¢¼´Ë¢ĞÂµÄÎÊÌâ£¬¸ã¸ö±äÁ¿»º´æ¸Ä¶¯
+        /// UIEçš„ SetPosition æœ‰å»¶è¿Ÿï¼Œä¸æ˜¯ç«‹å³ç”Ÿæ•ˆçš„ï¼Œè¿™é‡Œåšä¸€ä¸ªç¼“å­˜
         /// </summary>
         internal Rect nodePosition;
 
@@ -333,7 +332,7 @@ namespace Saro.BT.Designer
         }
     }
 
-    /*
+    /* // TODO è¿­ä»£å™¨æ”¯æŒï¼Œè€ƒè™‘åƒtransformçš„foreachä¸€æ ·ï¼Œç¬¬ä¸€ä¸ªå…ƒç´ æ˜¯è‡ªèº«
     public partial class BTGraphNode
     {
         /// <summary>

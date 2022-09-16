@@ -1,4 +1,4 @@
-
+﻿
 using System.Text;
 
 namespace Saro.BT

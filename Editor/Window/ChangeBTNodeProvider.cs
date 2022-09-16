@@ -1,4 +1,4 @@
-using System;
+Ôªøusing System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
@@ -106,7 +106,7 @@ namespace Saro.BT.Designer
             var type = searchTreeEntry.userData as Type;
             m_Node.SetBehavior(Activator.CreateInstance(type) as BTNode);
 
-            m_Node = null; // Ω‚“˝”√
+            m_Node = null;
 
             return true;
         }

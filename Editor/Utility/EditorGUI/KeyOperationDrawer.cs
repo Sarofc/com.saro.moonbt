@@ -31,11 +31,11 @@ namespace Saro.BT.Designer
 
             return keyType switch
             {
-                BBKeyType_Bool => (EBasicKeyOperation)keyOperation,
-                BBKeyType_Object => (EBasicKeyOperation)keyOperation,
-                BBKeyType_Float => (EArithmeticKeyOperation)keyOperation,
-                BBKeyType_Int => (EArithmeticKeyOperation)keyOperation,
-                BBKeyType_String => (ETextKeyOperation)keyOperation,
+                BBKey_Bool => (EBasicKeyOperation)keyOperation,
+                BBKey_Object => (EBasicKeyOperation)keyOperation,
+                BBKey_Float => (EArithmeticKeyOperation)keyOperation,
+                BBKey_Int => (EArithmeticKeyOperation)keyOperation,
+                BBKey_String => (ETextKeyOperation)keyOperation,
                 _ => null,
             };
         }

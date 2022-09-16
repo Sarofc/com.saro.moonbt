@@ -7,7 +7,7 @@ namespace Saro.BT
     [Serializable]
     public sealed class BlackboardData /*: ScriptableObject*/
     {
-        //public BlackboardData parent;
+        //public BlackboardData parent; // TODO 看需不需要 父黑板？
 
         public List<BlackboardEntry> entries = new(0);
 

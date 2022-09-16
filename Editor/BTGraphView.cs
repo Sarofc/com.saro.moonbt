@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
@@ -19,8 +19,7 @@ namespace Saro.BT.Designer
      *      RegisterCallback<MouseMoveEvent>(OnMouseMoveEvent);
      *
      *      // TODO
-     *      x. copy paste Á¬Ïß£¬Ôö¼Ó×¨ÓÃcopyÊı¾İÀà£¬±£´æËùÓĞ½Úµã£¬ºÍÁ¬Ïß£¬Ê¹ÓÃÊı×éindexÀ´Ë÷Òı°É
-     *      2. Á¬Ïß/¶ÏÏß/ÒÆ¶¯½Úµã Ê±£¬¸üĞÂpreOrder
+     *      2. éœ€è¦å®æ—¶åˆ·æ–° preOrder
      */
     public class BTGraphView : AbstractGraphView
     {
@@ -63,7 +62,7 @@ namespace Saro.BT.Designer
 
             UpdateView(tree);
 
-            //graphViewChanged += OnGraphChange; // Ö»ÄÜÀ¹½Ø¸Ä¶¯£¬shadergraphÊÇÀ¹½Øºó£¬ÊÖ¶¯applyÉÏÈ¥
+            //graphViewChanged += OnGraphChange; // éœ€è¦å‚è€ƒshadergraph
         }
 
         public void OnBehaviorTreeChanged(BehaviorTree tree)
@@ -292,7 +291,7 @@ namespace Saro.BT.Designer
 
         private void Commit()
         {
-            // ÏÈ½« Tree.nodes ÌîÂú
+            // è®¾ç½® Tree.nodes
             Root.PreCommit(Tree);
 
             var stack = new Stack<BTGraphNode>();
@@ -340,7 +339,7 @@ namespace Saro.BT.Designer
 
         private void HighlightAbortNodes(BTGraphNode selectionNode)
         {
-            if (Application.isPlaying) return; // ÔËĞĞÊ±ÆÁ±Î
+            if (Application.isPlaying) return; // è¿è¡Œæ—¶ï¼Œä¸è¦å¤„ç†
 
             if (selectionNode is BTDecoratorNode decoratorNode)
             {
@@ -450,7 +449,7 @@ namespace Saro.BT.Designer
             return null;
         }
 
-        // Ä¬ÈÏĞĞÎª ¾ÍÊÇÕâÑùµÄ
+        // é»˜è®¤å®ç°å°±æ˜¯è¿™ä¸ª
         //private bool CanPasteSerializedDataImplementation(string data)
         //{
         //    return data.Contains("application/vnd.unity.graphview.elements ");

@@ -1,4 +1,4 @@
-using System;
+锘縰sing System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -41,10 +41,6 @@ namespace Saro.BT.Designer
                                 compositeGroup.Add(new SearchTreeEntry(new GUIContent(type.Name)) { level = 2, userData = type });
                             else if (type.IsSubclassOf(typeof(BTTask)))
                                 taskGroup.Add(new SearchTreeEntry(new GUIContent(type.Name)) { level = 2, userData = type });
-
-                            // 不允许创建 BTAuxiliary 了，使用 DecoratorNodeProvider
-                            //else if (type.IsSubclassOf(typeof(BTAuxiliary)))
-                            //    auxiliaryGroup.Add(new SearchTreeEntry(new GUIContent(type.Name)) { level = 2, userData = type });
                         }
                     }
                 }
@@ -52,9 +48,6 @@ namespace Saro.BT.Designer
 
             m_Entries.Add(new SearchTreeGroupEntry(new GUIContent("Composite"), 1));
             m_Entries.AddRange(compositeGroup);
-
-            //m_Entries.Add(new SearchTreeGroupEntry(new GUIContent("Auxiliary"), 1));
-            //m_Entries.AddRange(auxiliaryGroup);
 
             m_Entries.Add(new SearchTreeGroupEntry(new GUIContent("Task"), 1));
             m_Entries.AddRange(taskGroup);
