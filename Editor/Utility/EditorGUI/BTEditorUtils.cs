@@ -29,7 +29,7 @@ namespace Saro.BT.Designer
                 return result;
             }
 
-            foreach (var drawerType in ReflectionUtility.GetSubClassTypesAllAssemblies(typeof(CustomDrawer)))
+            foreach (var drawerType in TypeUtility.GetSubClassTypesAllAssemblies(typeof(CustomDrawer)))
             {
                 var args = drawerType.BaseType.GetGenericArguments();
                 if (args.Length == 1 && args[0].IsAssignableFrom(type))
@@ -658,7 +658,7 @@ namespace Saro.BT.Designer
         {
             if (!k_ReferenceCache.TryGetValue(t, out var subTypes))
             {
-                subTypes = ReflectionUtility.GetSubClassTypesAllAssemblies(t, false);
+                subTypes = TypeUtility.GetSubClassTypesAllAssemblies(t, false);
 
                 k_ReferenceCache.Add(t, subTypes);
             }

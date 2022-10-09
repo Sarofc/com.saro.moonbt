@@ -16,7 +16,7 @@ namespace Saro.BT
             NullValueHandling = NullValueHandling.Ignore,
             Formatting = Formatting.Indented,
             DefaultValueHandling = DefaultValueHandling.Ignore,
-            Converters = ReflectionUtility.GetSubClassTypesAllAssemblies(typeof(PartialConverter)).Select(t => Activator.CreateInstance(t) as JsonConverter).ToArray(),
+            Converters = TypeUtility.GetSubClassTypesAllAssemblies(typeof(PartialConverter)).Select(t => Activator.CreateInstance(t) as JsonConverter).ToArray(),
         };
 
         public static string ToJson(BehaviorTree tree)
