@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Saro.SEditor;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -76,7 +77,7 @@ namespace Saro.BT.Designer
             evt.menu.MenuItems().Add(new BTGraphDropdownMenuAction("Open Script", (a) =>
             {
                 Debug.Assert(NodeBehavior != null);
-                BTEditorUtils.OpenScriptByType(NodeBehavior.GetType());
+                SEditorUtility.OpenScriptByType(NodeBehavior.GetType());
             }));
 
             evt.menu.AppendSeparator();
@@ -153,7 +154,7 @@ namespace Saro.BT.Designer
             var nodeAttribute = NodeBehavior.GetType().GetCustomAttribute<BTNodeAttribute>();
             if (nodeAttribute != null)
             {
-                m_Icon.image = BTEditorUtils.GetIcon(nodeAttribute.iconPath);
+                m_Icon.image = SEditorUtility.GetIcon(nodeAttribute.iconPath);
                 titleContainer.tooltip = nodeAttribute.nodeDesc;
             }
 
@@ -316,7 +317,7 @@ namespace Saro.BT.Designer
         {
             if (NodeBehavior != null)
             {
-                BTEditorUtils.ShowAutoEditorGUI(NodeBehavior);
+                SEditorUtility.ShowAutoEditorGUI(NodeBehavior);
             }
         }
 

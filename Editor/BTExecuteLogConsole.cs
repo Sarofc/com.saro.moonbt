@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Saro.SEditor;
 using UnityEditor;
 using UnityEngine;
 
@@ -52,7 +53,7 @@ namespace Saro.BT.Designer
                 BTBehaviorIterator.s_LogCache.Clear();
             }
 
-            BTEditorUtils.Separator();
+            SEditorUtility.Separator();
 
             bool search = !string.IsNullOrEmpty(m_SearchText);
 

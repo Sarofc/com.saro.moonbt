@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace Saro.BT
 {
+    [Conditional("UNITY_EDITOR")]
     [AttributeUsage(AttributeTargets.Class, Inherited = true)]
     public class BTNodeAttribute : Attribute
     {

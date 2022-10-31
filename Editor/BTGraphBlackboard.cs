@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using Saro.SEditor;
+using UnityEditor;
 using UnityEngine;
 
 namespace Saro.BT.Designer
@@ -51,7 +52,7 @@ namespace Saro.BT.Designer
                     var bbData = m_GraphView.Tree.blackboardData;
                     if (bbData != null)
                     {
-                        BTEditorUtils.ListEditor("", bbData.entries);
+                        SEditorUtility.ListEditor("", bbData.entries);
                         //BTEditorUtils.ShowAutoEditorGUI(bbData);
                     }
                     else

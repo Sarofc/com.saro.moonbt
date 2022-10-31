@@ -6,6 +6,7 @@ using UnityEditor.Callbacks;
 using UnityEditor.Experimental.GraphView;
 using System.IO;
 using System.Threading.Tasks;
+using Saro.SEditor;
 
 namespace Saro.BT.Designer
 {
@@ -49,7 +50,7 @@ namespace Saro.BT.Designer
         private void OnEnable()
         {
             titleContent.text = $"{k_EditorName}";
-            titleContent.image = BTEditorUtils.GetIcon("Run_Behaviour_24x");
+            titleContent.image = SEditorUtility.GetIcon("Run_Behaviour_24x");
 
             Selection.selectionChanged += SelectionChanged;
             EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
