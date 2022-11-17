@@ -13,6 +13,13 @@ namespace Saro.BT
         [BTRunTimeValue]
         public Timer timer = new();
 
+        public override BTNode Clone()
+        {
+            var newNode = base.Clone() as Wait;
+            newNode.timer = new(timer);
+            return newNode;
+        }
+
         public override void OnEnter()
         {
             timer.Start();

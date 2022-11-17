@@ -27,35 +27,26 @@ namespace Saro.BT
 
         //public int LevelOrder => levelOrder;
 
-        [JsonIgnore]
         protected BTBlackboard Blackboard => Tree.Blackboard;
 
-        [JsonIgnore]
         protected EcsEntity Actor => Tree.actor;
 
-        [JsonIgnore]
         internal int preOrder = k_InvalidPreOrder;
 
         //internal int postOrderIndex = 0;
-
         //internal int levelOrder = 0;
 
         [JsonIgnore]
         public BTNode Parent { get; set; }
 
-        [JsonIgnore]
         public BTBehaviorIterator Iterator { get; internal set; }
 
-        [JsonIgnore]
         protected internal int childIndex = 0;
 
         /// <summary>
         /// 行为树启动时调用，用于初始化节点数据
         /// </summary>
-        public virtual void OnInitialize()
-        {
-            OnValidate();
-        }
+        public virtual void OnInitialize() { }
 
         /// <summary>
         /// 行为树停止时调用，用于清理节点数据
@@ -121,6 +112,8 @@ namespace Saro.BT
 
         public bool IsTask() => MaxChildCount() == 0;
 
+        public abstract BTNode Clone();
+
         public virtual void Description(StringBuilder builder) { }
 
         // 用 partial 会导致编辑器面板 字段顺序 紊乱 
@@ -136,18 +129,15 @@ namespace Saro.BT
 
         [HideInInspector]
         [SerializeField]
-        [JsonProperty]
         internal Rect nodePosition;
 
         [Space(20)]
         [Separator]
         [TextArea]
         [SerializeField]
-        [JsonProperty]
         internal string comment;
 
         [SerializeField]
-        [JsonProperty]
         internal string title;
 
         internal string Title => string.IsNullOrEmpty(title) ? GetType().Name : title;

@@ -12,13 +12,19 @@ namespace Saro.BT
     {
         [JsonProperty]
         [SerializeField]
-        private int[] m_Children;
+        protected int[] m_Children;
 
         [JsonIgnore]
         protected EStatus m_LastChildExitStatus;
 
         [JsonIgnore]
         public int CurrentChildIndex { get; private set; } = 0;
+
+        public override BTNode Clone()
+        {
+            var newNode = MemberwiseClone() as BTComposite;
+            return newNode;
+        }
 
         public virtual BTNode CurrentChild()
         {

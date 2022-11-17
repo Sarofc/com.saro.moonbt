@@ -1,7 +1,5 @@
-﻿
-using System.Text;
+﻿using System.Text;
 using UnityEngine;
-using UnityEngine.Scripting.APIUpdating;
 
 namespace Saro.BT
 {
@@ -12,32 +10,52 @@ namespace Saro.BT
      * 
      */
 
-    [MovedFrom(true, sourceClassName: "RunSubtree")]
     [BTNode("Run_Behaviour_24x", "“运行”")]
     public sealed class RunBehaviour : BTTask
     {
+        [HideInInspector]
+        public string subtreeAsset;
+
+#if UNITY_EDITOR
         [Tooltip("The sub-tree to run when this task executes.")]
-        public BehaviorTree subtreeAsset;
+        [SerializeField]
+        internal BehaviorTree m_SubTreeAsset;
+#endif
 
         private BehaviorTree m_RunningSubTree;
+
+        public override BTNode Clone()
+        {
+            var newNode = new RunBehaviour();
+            newNode.subtreeAsset = subtreeAsset;
+            return newNode;
+        }
+
+        protected internal override void OnValidate()
+        {
+            base.OnValidate();
+
+            subtreeAsset = m_SubTreeAsset == null ? null : m_SubTreeAsset.name;
+        }
 
         public override void OnInitialize()
         {
             base.OnInitialize();
 
-            if (m_RunningSubTree == null && subtreeAsset)
-            {
-                m_RunningSubTree = BehaviorTree.Clone(subtreeAsset);
-                m_RunningSubTree.actor = Actor;
-                m_RunningSubTree.Initialize();
-            }
+            // TODO
+            //if (m_RunningSubTree == null && subtreeAsset)
+            //{
+            //    m_RunningSubTree = BehaviorTree.Clone(subtreeAsset);
+            //    m_RunningSubTree.actor = Actor;
+            //    m_RunningSubTree.Initialize();
+            //}
         }
 
         public override void OnReset()
         {
             base.OnReset();
 
-            if(m_RunningSubTree != null)
+            if (m_RunningSubTree != null)
             {
                 m_RunningSubTree.ResetData();
             }
@@ -74,7 +92,7 @@ namespace Saro.BT
         {
             if (subtreeAsset != null)
             {
-                builder.AppendFormat("Run {0}", subtreeAsset.name);
+                builder.AppendFormat("Run {0}", subtreeAsset);
             }
             else
             {

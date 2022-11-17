@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 using Saro.BT.Utility;
 
 namespace Saro.BT
@@ -11,9 +9,17 @@ namespace Saro.BT
         [BTRunTimeValue]
         public Timer timer = new();
 
-        public TimeLimit()
+        private void init()
         {
             timer.OnTimeout = Evaluate;
+        }
+
+        public override BTNode Clone()
+        {
+            var newNode = base.Clone() as TimeLimit;
+            newNode.timer = new(timer);
+            newNode.init();
+            return newNode;
         }
 
         internal protected override void OnValidate()

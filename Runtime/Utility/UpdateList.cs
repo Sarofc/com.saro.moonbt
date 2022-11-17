@@ -16,7 +16,7 @@ namespace Saro.BT
 
         public UpdateList()
         {
-            m_IsInRemovealQueue = delegate (T val)
+            m_IsInRemovealQueue = (T val) =>
             {
                 return m_RemoveQueue.Contains(val);
             };
@@ -40,6 +40,12 @@ namespace Saro.BT
                 m_AddQueue.Clear();
             }
         }
-    }
 
+        public void Clear()
+        {
+            m_Data.Clear();
+            m_AddQueue.Clear();
+            m_RemoveQueue.Clear();
+        }
+    }
 }

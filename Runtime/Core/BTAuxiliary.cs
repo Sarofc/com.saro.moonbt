@@ -9,7 +9,7 @@ namespace Saro.BT
     {
         [JsonProperty]
         [SerializeField]
-        private int m_Child;
+        protected int m_Child;
 
         [JsonIgnore]
         internal BTNode Child

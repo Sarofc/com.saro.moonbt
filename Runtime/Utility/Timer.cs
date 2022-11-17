@@ -16,6 +16,7 @@ namespace Saro.BT.Utility
 
         [JsonIgnore]
         public float TimeLeft { get; private set; } = 0f;
+
         [JsonIgnore]
         public bool AutoRestart { get; set; } = false;
 
@@ -25,7 +26,17 @@ namespace Saro.BT.Utility
         [JsonIgnore]
         public bool IsRunning => !IsDone;
 
+        [JsonIgnore]
         public Action OnTimeout; // TODO 使用的地方，缓存action
+
+        public Timer() { }
+
+        public Timer(Timer timer)
+        {
+            interval = timer.interval;
+            deviation = timer.deviation;
+            AutoRestart = timer.AutoRestart;
+        }
 
         public void Start()
         {

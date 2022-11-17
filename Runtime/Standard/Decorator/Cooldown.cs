@@ -14,7 +14,7 @@ namespace Saro.BT
         private Action m_RemoveTimer;
         private Action m_Evaluate;
 
-        public Cooldown()
+        private void init()
         {
             m_RemoveTimer = () => Tree.RemoveTimer(timer);
             m_Evaluate = () =>
@@ -22,6 +22,14 @@ namespace Saro.BT
                 Tree.RemoveTimer(timer);
                 Evaluate();
             };
+        }
+
+        public override BTNode Clone()
+        {
+            var newNode = new Cooldown();
+            newNode.timer = new(timer);
+            newNode.init();
+            return newNode;
         }
 
         protected override void OnDecoratorEnter()

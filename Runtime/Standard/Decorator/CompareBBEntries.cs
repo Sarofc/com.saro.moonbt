@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Globalization;
 using System.Text;
 
 namespace Saro.BT
@@ -14,9 +15,7 @@ namespace Saro.BT
     public class CompareBBEntries : BTDecorator
     {
         public EBlackBoardEntryComparison op;
-
         public BBKeySelector bbKeyA = new();
-
         public BBKeySelector bbKeyB = new();
 
         private Action m_OnBlackboardChanged;

@@ -133,14 +133,12 @@ namespace Saro.BT.Designer
             }
 
             {
-
                 var btnExport = m_Uxml.Q<Button>("BtnExport");
                 btnExport.clicked += () =>
                 {
                     if (CurretnTree != null)
                     {
-                        // TODO save json
-                        var json = BehaviorTree.ToJson(CurretnTree);
+                        var json = JsonHelper.ToJson(CurretnTree);
                         var path = AssetDatabase.GetAssetPath(CurretnTree) + ".json";
                         File.WriteAllText(path, json);
                         AssetDatabase.SaveAssets();

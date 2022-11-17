@@ -19,14 +19,22 @@ namespace Saro.BT
     public abstract class BTService : BTAuxiliary
     {
         [BTRunTimeValue]
-        public Timer timer = new();
+        public Timer timer;
         [Tooltip("每次进入节点时，重新启动计时器")]
         public bool restartTimerOnEnter;
 
-        public BTService()
+        private void init()
         {
             timer.OnTimeout = ServiceTick;
             timer.AutoRestart = true;
+        }
+
+        public override BTNode Clone()
+        {
+            var newNode = MemberwiseClone() as BTService;
+            newNode.timer = new(timer);
+            newNode.init();
+            return newNode;
         }
 
         public sealed override void OnEnter()

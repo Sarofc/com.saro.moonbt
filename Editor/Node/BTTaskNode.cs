@@ -41,7 +41,7 @@ namespace Saro.BT.Designer
                 if (NodeBehavior is RunBehaviour _runBehavior)
                 {
                     if (_runBehavior.subtreeAsset != null)
-                        Selection.activeObject = _runBehavior.subtreeAsset;
+                        Selection.activeObject = _runBehavior.m_SubTreeAsset;
                     else
                         Debug.LogError("subTree is null");
                 }

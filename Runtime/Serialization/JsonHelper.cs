@@ -9,13 +9,13 @@ namespace Saro.BT
 {
     internal static class JsonHelper
     {
-        static JsonSerializerSettings s_Settings = new JsonSerializerSettings
+        static JsonSerializerSettings s_Settings = new()
         {
             TypeNameHandling = TypeNameHandling.Auto,
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
             NullValueHandling = NullValueHandling.Ignore,
-            Formatting = Formatting.Indented,
             DefaultValueHandling = DefaultValueHandling.Ignore,
+            //Formatting = Formatting.Indented,
             Converters = TypeUtility.GetSubClassTypesAllAssemblies(typeof(PartialConverter)).Select(t => Activator.CreateInstance(t) as JsonConverter).ToArray(),
         };
 

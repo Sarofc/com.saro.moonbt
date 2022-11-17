@@ -7,6 +7,11 @@ namespace Saro.BT
     [BTNode("Task_24x")]
     public abstract class BTTask : BTNode
     {
+        public override BTNode Clone()
+        {
+            return MemberwiseClone() as BTNode;
+        }
+
         public sealed override void OnAbort(int childIndex) { }
 
         public sealed override void OnChildEnter(int childIndex) { }

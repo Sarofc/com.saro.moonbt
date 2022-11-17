@@ -34,5 +34,14 @@ namespace Saro.BT
 
             return -1;
         }
+
+        /// <summary>
+        /// 浅拷贝吧，这个数据应该是不可变的
+        /// </summary>
+        /// <returns></returns>
+        public BlackboardData Clone()
+        {
+            return this;
+        }
     }
 }

@@ -18,15 +18,12 @@ namespace Saro.BT
     /*
      * TODO
      * 
-     * 1. json保存
-     * 2. action执行完，立即调用reset清理接口
-     * 3. stop整个树是，正在执行的action也要调用reset
+     * 1. json保存，目前json会剔除so相关的引用，debug时，有一些逻辑问题
+     * 3. 清理整个树时，正在执行的action也要调用reset
      * 
      */
 
-    [CreateAssetMenu(menuName = "Gameplay/" + nameof(BehaviorTree))]
     public partial class BehaviorTree
-        : ScriptableObject // TODO 这个加个editor宏，就可以打包后，直接使用json之类的来加载了，json导出忽略editor下的字段
     {
         private BTBehaviorIterator m_MainIterator;
 
@@ -41,9 +38,6 @@ namespace Saro.BT
         [JsonIgnore]
         public BTBlackboard Blackboard { get; private set; }
 
-        /// <summary>
-        /// 行为树的拥有者
-        /// </summary>
         [JsonIgnore]
         public EcsEntity actor;
 
@@ -66,33 +60,6 @@ namespace Saro.BT
         internal BlackboardData blackboardData;
 
         #endregion
-
-        public static BehaviorTree CreateRuntimeTree(BehaviorTree treeAsset, EcsEntity actor)
-        {
-            var runtimeTree = Clone(treeAsset);
-
-            if (runtimeTree != null)
-            {
-#if UNITY_EDITOR
-                runtimeTree.name = runtimeTree.name.Replace("(Clone)", "(Runtime)");
-#endif
-            }
-            else
-            {
-                Debug.LogError("null tree set for.");
-            }
-
-            runtimeTree.actor = actor;
-
-            runtimeTree.Initialize();
-
-            return runtimeTree;
-        }
-
-        public static void ReleaseRuntimeTree(BehaviorTree runtimeTree)
-        {
-            // TODO pooling
-        }
 
         /// <summary>
         /// 初始化树
@@ -134,7 +101,7 @@ namespace Saro.BT
                 node.OnReset();
             }
 
-            // TODO timer
+            m_ActiveTimers.Clear();
         }
 
         public void Tick(float deltaTime)
@@ -204,6 +171,7 @@ namespace Saro.BT
                     child.Parent = node;
                 }
 
+                //node.OnValidate();
                 node.OnInitialize();
             }
         }
@@ -212,24 +180,72 @@ namespace Saro.BT
 
         public BTNode.EStatus LastStatus() => m_MainIterator.LastExecutedStatus;
 
-        public static BehaviorTree Clone(BehaviorTree originTree)
+        public BehaviorTree Clone()
         {
-            var newTree = ScriptableObject.Instantiate(originTree);
+            var newTree = new BehaviorTree();
+            newTree.nodes = new BTNode[nodes.Length];
+            for (int i = 0; i < nodes.Length; i++)
+            {
+                newTree.nodes[i] = nodes[i].Clone();
+            }
+            newTree.blackboardData = blackboardData;
             return newTree;
         }
+    }
 
-        public static string ToJson(BehaviorTree tree)
+    partial class BehaviorTree
+    {
+        // TODO 通过id，加载实例，池化策略：以id为准，同一id，数据一致，都是静态的数据
+        //public static BehaviorTree CreateRuntimeTree(string template, EcsEntity actor)
+        //{
+        //    var templateTree =
+        //}
+
+        public static BehaviorTree CreateRuntimeTree(BehaviorTree template, EcsEntity actor)
         {
-            return JsonHelper.ToJson(tree);
+            var runtimeTree = template.Clone();
+
+            if (runtimeTree != null)
+            {
+#if UNITY_EDITOR
+                runtimeTree.name = runtimeTree.name.Replace("(Clone)", "(Runtime)");
+#endif
+            }
+            else
+            {
+                Debug.LogError("null tree set for.");
+            }
+
+            runtimeTree.actor = actor;
+            runtimeTree.Initialize();
+            return runtimeTree;
+        }
+
+        public static void ReleaseRuntimeTree(BehaviorTree runtimeTree)
+        {
+            // TODO pooling
+            runtimeTree.ResetData();
         }
 
         public static BehaviorTree FromJson(string json)
         {
             return JsonHelper.FromJson(json);
         }
-
+    }
 
 #if UNITY_EDITOR
+    [CreateAssetMenu(menuName = "Gameplay/" + nameof(BehaviorTree))]
+    partial class BehaviorTree : ScriptableObject
+    {
+        [SerializeField]
+        [HideInInspector]
+        internal Vector3 graphPosition;
+        [SerializeField]
+        [HideInInspector]
+        internal Vector3 graphScale = Vector3.one;
+
+        /*[HideInInspector]*/
+        //public List<BTNode> unusedNodes = new List<BTNode>();
 
         public override string ToString()
         {
@@ -254,16 +270,16 @@ namespace Saro.BT
             }
         }
 
-        [SerializeField]
-        [HideInInspector]
-        internal Vector3 graphPosition;
-        [SerializeField]
-        [HideInInspector]
-        internal Vector3 graphScale = Vector3.one;
-
-        /*[HideInInspector]*/
-        //public List<BTNode> unusedNodes = new List<BTNode>();
-#endif
+        internal void OnValidate()
+        {
+            if (nodes != null)
+            {
+                foreach (var node in nodes)
+                {
+                    node.OnValidate();
+                }
+            }
+        }
     }
-
+#endif
 }

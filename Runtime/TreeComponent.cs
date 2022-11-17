@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace Saro.BT
 {
+    [System.Obsolete]
     public class TreeComponent : MonoBehaviour
     {
         /// <summary>

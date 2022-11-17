@@ -138,5 +138,10 @@ namespace Saro.BT.Designer
         {
             m_Child = node;
         }
+
+        public override BTNode Clone()
+        {
+            return new Root();
+        }
     }
 }

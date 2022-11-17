@@ -29,6 +29,12 @@ namespace Saro.BT
         [JsonIgnore]
         protected bool IsActive = false;
 
+        public override BTNode Clone()
+        {
+            var newNode = MemberwiseClone() as BTDecorator;
+            return newNode;
+        }
+
         public sealed override void OnEnter()
         {
             IsActive = true;

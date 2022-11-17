@@ -6,8 +6,11 @@ namespace Saro.BT
     public class BlackboardEntry
     {
         public string keyName;
-        public string keyDesc;
-        //public string guid; // TODO use GUID to ref
+
+#if UNITY_EDITOR
+        [SerializeField]
+        internal string keyDesc;
+#endif
 
         [SerializeReference]
         public BlackboardKeyType keyType;
