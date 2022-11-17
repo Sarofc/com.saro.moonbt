@@ -14,12 +14,16 @@ namespace Saro.BT
         [BTRunTimeValue]
         private int m_LoopCounter;
 
-        public override void OnEnter()
+        protected override void OnDecoratorEnter()
         {
             m_LoopCounter = 0;
         }
 
-        public override EStatus OnExecute()
+        protected override void OnDecoratorExit()
+        {
+        }
+
+        public override EStatus OnExecute(float deltaTime)
         {
             if (loopCount == -1)
             {
@@ -63,5 +67,4 @@ namespace Saro.BT
             }
         }
     }
-
 }

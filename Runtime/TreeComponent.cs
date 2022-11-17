@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Saro.Entities;
 using UnityEngine;
 
 namespace Saro.BT
@@ -26,7 +27,7 @@ namespace Saro.BT
 
         private BehaviorTree m_RuntimeTree;
 
-        public void Init(object actor)
+        public void Init(EcsEntity actor)
         {
             m_RuntimeTree = BehaviorTree.CreateRuntimeTree(TreeAsset, actor);
 
@@ -42,7 +43,7 @@ namespace Saro.BT
         public void Tick()
         {
             if (m_RuntimeTree != null)
-                m_RuntimeTree.Tick();
+                m_RuntimeTree.Tick(Time.deltaTime);
         }
 
         private void FixedUpdate()

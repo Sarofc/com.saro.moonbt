@@ -25,7 +25,7 @@ namespace Saro.BT.Utility
         [JsonIgnore]
         public bool IsRunning => !IsDone;
 
-        public Action OnTimeout;
+        public Action OnTimeout; // TODO 使用的地方，缓存action
 
         public void Start()
         {

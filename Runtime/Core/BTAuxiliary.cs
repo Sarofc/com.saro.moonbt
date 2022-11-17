@@ -20,6 +20,11 @@ namespace Saro.BT
 
         public override void OnEnter()
         {
+            RunChild();
+        }
+
+        protected void RunChild()
+        {
             if (Child != null)
                 Iterator.Traverse(Child);
         }

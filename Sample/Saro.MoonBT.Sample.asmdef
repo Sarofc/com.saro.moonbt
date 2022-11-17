@@ -2,7 +2,8 @@
     "name": "Saro.MoonBT.Sample",
     "rootNamespace": "",
     "references": [
-        "GUID:9ca665f15bf24114ca07f91c752c5661"
+        "Saro.MoonBT",
+        "Saro.Entities"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

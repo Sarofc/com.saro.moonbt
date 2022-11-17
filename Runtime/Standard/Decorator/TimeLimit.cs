@@ -5,11 +5,16 @@ using Saro.BT.Utility;
 
 namespace Saro.BT
 {
-    [BTNode("Time_Limit_24x","“时间限制”装饰节点\n定时器归零后，将失败")]
+    [BTNode("Time_Limit_24x", "“时间限制”装饰节点\n定时器归零后，将失败")]
     public class TimeLimit : BTDecorator
     {
         [BTRunTimeValue]
-        public Timer timer = new Timer();
+        public Timer timer = new();
+
+        public TimeLimit()
+        {
+            timer.OnTimeout = Evaluate;
+        }
 
         internal protected override void OnValidate()
         {
@@ -18,29 +23,20 @@ namespace Saro.BT
             UpdateAborts();
         }
 
-        public override void OnInitialize()
-        {
-            base.OnInitialize();
-
-            timer.OnTimeout += Evaluate;
-        }
-
-        public override void OnEnter()
+        protected override void OnDecoratorEnter()
         {
             Tree.AddTimer(timer);
             timer.Start();
-            base.OnEnter();
+
+            RunChild();
         }
 
-        public override void OnExit()
+        protected override void OnDecoratorExit()
         {
             Tree.RemoveTimer(timer);
         }
 
-        public override bool Condition()
-        {
-            return !timer.IsDone;
-        }
+        protected override bool EvaluateCondition() => false;
 
         public override void Description(StringBuilder builder)
         {

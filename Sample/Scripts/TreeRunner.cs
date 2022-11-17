@@ -7,7 +7,7 @@ namespace Saro.BT.Sample
         void Start()
         {
             var treeComp = GetComponent<TreeComponent>();
-            treeComp.Init(this);
+            treeComp.Init(default);
             treeComp.Run();
         }
     }

@@ -23,11 +23,9 @@ namespace Saro.BT
         [Tooltip("每次进入节点时，重新启动计时器")]
         public bool restartTimerOnEnter;
 
-        public sealed override void OnInitialize()
+        public BTService()
         {
-            base.OnInitialize();
-
-            timer.OnTimeout += ServiceTick;
+            timer.OnTimeout = ServiceTick;
             timer.AutoRestart = true;
         }
 
@@ -40,7 +38,7 @@ namespace Saro.BT
                 timer.Start();
             }
 
-            if (Child != null) Iterator.Traverse(Child);
+            RunChild();
         }
 
         public sealed override void OnExit()
@@ -48,7 +46,7 @@ namespace Saro.BT
             Tree.RemoveTimer(timer);
         }
 
-        public sealed override EStatus OnExecute()
+        public sealed override EStatus OnExecute(float deltaTime)
         {
             return Iterator.LastChildExitStatus.GetValueOrDefault(EStatus.Failure);
         }
@@ -57,8 +55,9 @@ namespace Saro.BT
 
         public override void Description(StringBuilder builder)
         {
-            builder.AppendFormat("Tick every {0:0.00} s", timer.GetIntervalInfo());
-            builder.AppendLine(restartTimerOnEnter ? "Restart timer on enter" : "Resume timer on enter");
+            builder.AppendFormat("Tick every {0:0.00} s", timer.GetIntervalInfo())
+                .AppendLine()
+                .Append(restartTimerOnEnter ? "Restart timer on enter" : "Resume timer on enter");
         }
 
         public sealed override void OnChildEnter(int childIndex) { }

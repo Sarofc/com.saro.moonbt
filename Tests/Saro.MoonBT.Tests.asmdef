@@ -1,11 +1,12 @@
 {
-    "name": "Saro.MoonBT",
+    "name": "Saro.MoonBT.Tests",
     "rootNamespace": "",
     "references": [
-        "Saro.MGF",
-        "Saro.Entities"
+        "Saro.MoonBT"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

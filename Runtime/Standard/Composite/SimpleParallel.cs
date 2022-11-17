@@ -84,7 +84,7 @@ namespace Saro.BT
             m_ChildrenStatus[childIndex] = status;
         }
 
-        public override EStatus OnExecute()
+        public override EStatus OnExecute(float deltaTime)
         {
             if (m_ChildrenStatus[0] == EStatus.Failure) return EStatus.Failure;
 
@@ -108,7 +108,7 @@ namespace Saro.BT
             {
                 if (m_BranchIterator[i].IsRunning)
                 {
-                    m_BranchIterator[i].Tick();
+                    m_BranchIterator[i].Tick(deltaTime);
                 }
             }
 

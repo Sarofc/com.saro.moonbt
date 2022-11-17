@@ -1,4 +1,5 @@
 ﻿using System;
+using Saro.Entities;
 
 namespace Saro.BT
 {
@@ -125,6 +126,14 @@ namespace Saro.BT
         public override bool TestOperation(object valueA, byte op, object _ = null)
         {
             return (EBasicKeyOperation)op == EBasicKeyOperation.Set ? valueA != null : valueA == null;
+        }
+    }
+
+    public class BBKey_EcsEntity : BlackboardKeyType<EcsEntity>
+    {
+        public override bool TestOperation(EcsEntity valueA, byte op, EcsEntity _ = default)
+        {
+            return (EBasicKeyOperation)op == EBasicKeyOperation.Set ? valueA.IsAlive() : !valueA.IsAlive();
         }
     }
 }

@@ -11,16 +11,16 @@ namespace Saro.BT
     public sealed class Wait : BTTask
     {
         [BTRunTimeValue]
-        public Timer timer = new Timer();
+        public Timer timer = new();
 
         public override void OnEnter()
         {
             timer.Start();
         }
 
-        public override EStatus OnExecute()
+        public override EStatus OnExecute(float deltaTime)
         {
-            timer.Tick(Time.deltaTime);
+            timer.Tick(deltaTime);
 
             var status = timer.IsDone ? EStatus.Success : EStatus.Running;
 

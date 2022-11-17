@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using Saro.Entities;
 using Saro.SEditor;
 
 namespace Saro.BT
@@ -27,21 +28,33 @@ namespace Saro.BT
 
         private Action m_OnBlackboardChanged;
 
-        public override void OnInitialize()
+        public BBCondition()
         {
-            base.OnInitialize();
-
             m_OnBlackboardChanged = Evaluate;
         }
 
-        public override void OnReset()
+        protected override void OnDecoratorEnter()
         {
-            base.OnReset();
+            if (abortType != EAbortType.None)
+            {
+                ObserverBegin();
+            }
 
-            m_OnBlackboardChanged = null;
+            if (EvaluateCondition())
+            {
+                RunChild();
+            }
         }
 
-        public override bool Condition()
+        protected override void OnDecoratorExit()
+        {
+            if (abortType == EAbortType.None || abortType == EAbortType.Self)
+            {
+                ObserverEnd();
+            }
+        }
+
+        protected override bool EvaluateCondition()
         {
             // 这俩可以提前 初始化
             if (Blackboard == null) return false;
@@ -58,18 +71,19 @@ namespace Saro.BT
                 BBKey_Int bbkey => bbkey.TestOperation(Blackboard.GetValue<int>(keyIndex), keyOperation, compareInt),
                 BBKey_String bbkey => bbkey.TestOperation(Blackboard.GetValue<string>(keyIndex), keyOperation, compareText),
                 BBKey_Object bbkey => bbkey.TestOperation(Blackboard.GetValue<object>(keyIndex), keyOperation),
+                BBKey_EcsEntity bbkey => bbkey.TestOperation(Blackboard.GetValue<EcsEntity>(keyIndex), keyOperation),
                 _ => false,
             };
         }
 
-        public override void OnObserverBegin()
+        protected override void OnObserverBegin()
         {
             if (Blackboard == null) return;
 
             Blackboard.RegisterChangeEvent(bbKey, m_OnBlackboardChanged);
         }
 
-        public override void OnObserverEnd()
+        protected override void OnObserverEnd()
         {
             if (Blackboard == null) return;
 
@@ -104,6 +118,7 @@ namespace Saro.BT
             {
                 case BBKey_Bool _bool:
                 case BBKey_Object _object:
+                case BBKey_EcsEntity _entity:
                     {
                         var keyOp = (EBasicKeyOperation)keyOperation;
                         builder.Append(" is ");
@@ -159,6 +174,8 @@ namespace Saro.BT
                     BBKey_Int bbkey => typeof(BBKey_Int),
                     BBKey_String bbkey => typeof(BBKey_String),
                     BBKey_Object bbkey => typeof(BBKey_Object),
+                    BBKey_EcsEntity bbkey => typeof(BBKey_EcsEntity),
+                    BBKey_Vector3 bbkey => typeof(BBKey_Vector3),
                     _ => null,
                 };
             }

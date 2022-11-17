@@ -1,81 +1,67 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using Saro.BT.Utility;
 
 namespace Saro.BT
 {
+    // Cooldown只要没冷却，就会一直跑，但是观者者终止机制，只会在分支下才有效
     [BTNode("Cooldown_24x", "“冷却”装饰节点。\n自身条件基于Timer是否结束。退出此节点时，即子树执行完毕，才会开始计时！")]
     public sealed class Cooldown : BTDecorator
     {
         [BTRunTimeValue]
         public Timer timer = new();
 
-        public override void OnInitialize()
+        private Action m_RemoveTimer;
+        private Action m_Evaluate;
+
+        public Cooldown()
         {
-            base.OnInitialize();
-
-            timer.OnTimeout += RemoveOnTimeout;
-        }
-
-        public override void OnReset()
-        {
-            base.OnReset();
-
-            timer.OnTimeout -= RemoveOnTimeout;
-
-            if (IsObserving)
+            m_RemoveTimer = () => Tree.RemoveTimer(timer);
+            m_Evaluate = () =>
             {
-                IsObserving = false;
-                OnObserverEnd();
-            }
+                Tree.RemoveTimer(timer);
+                Evaluate();
+            };
         }
 
-        public override void OnEnter()
+        protected override void OnDecoratorEnter()
         {
-            IsActive = true;
-
             if (timer.IsDone)
             {
                 Iterator.Traverse(Child);
             }
         }
 
-        public override void OnExit()
+        protected override void OnDecoratorExit()
         {
+            if (abortType == EAbortType.LowerPriority)
+                ObserverBegin();
+
             if (timer.IsDone)
             {
                 Tree.AddTimer(timer);
                 timer.Start();
             }
-
-            IsActive = false;
         }
 
-        public override EStatus OnExecute()
+        protected override void OnObserverBegin()
         {
-            if (timer.IsRunning) return EStatus.Failure;
+            timer.OnTimeout = m_Evaluate;
+        }
+
+        protected override void OnObserverEnd()
+        {
+            timer.OnTimeout = m_RemoveTimer;
+        }
+
+        public override EStatus OnExecute(float deltaTime)
+        {
+            if (!timer.IsDone) return EStatus.Failure;
 
             return Iterator.LastChildExitStatus.GetValueOrDefault(EStatus.Failure);
         }
 
-        public override void OnObserverBegin()
-        {
-            timer.OnTimeout += Evaluate;
-        }
-
-        public override void OnObserverEnd()
-        {
-            timer.OnTimeout -= Evaluate;
-        }
-
-        public override bool Condition()
-        {
-            return timer.IsDone;
-        }
-
-        private void RemoveOnTimeout()
-        {
-            Tree.RemoveTimer(timer);
-        }
+        protected override bool EvaluateCondition() => true;
 
         public override void Description(StringBuilder builder)
         {

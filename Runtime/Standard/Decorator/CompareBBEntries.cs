@@ -19,7 +19,35 @@ namespace Saro.BT
 
         public BBKeySelector bbKeyB = new();
 
-        public override bool Condition()
+        private Action m_OnBlackboardChanged;
+
+        public CompareBBEntries()
+        {
+            m_OnBlackboardChanged = Evaluate;
+        }
+
+        protected override void OnDecoratorEnter()
+        {
+            if (abortType != EAbortType.None)
+            {
+                ObserverBegin();
+            }
+
+            if (EvaluateCondition())
+            {
+                RunChild();
+            }
+        }
+
+        protected override void OnDecoratorExit()
+        {
+            if (abortType == EAbortType.None || abortType == EAbortType.Self)
+            {
+                ObserverEnd();
+            }
+        }
+
+        protected override bool EvaluateCondition()
         {
             var bb = Blackboard;
 
@@ -29,32 +57,13 @@ namespace Saro.BT
             return valueA.Compare(valueB);
         }
 
-        private Action m_OnBlackboardChanged;
-
-        public override void OnInitialize()
-        {
-            base.OnInitialize();
-
-            m_OnBlackboardChanged = () =>
-            {
-                Evaluate();
-            };
-        }
-
-        public override void OnReset()
-        {
-            base.OnReset();
-
-            m_OnBlackboardChanged = null;
-        }
-
-        public override void OnObserverBegin()
+        protected override void OnObserverBegin()
         {
             Blackboard.RegisterChangeEvent(bbKeyA, m_OnBlackboardChanged);
             Blackboard.RegisterChangeEvent(bbKeyB, m_OnBlackboardChanged);
         }
 
-        public override void OnObserverEnd()
+        protected override void OnObserverEnd()
         {
             Blackboard.UnregisterChangeEvent(bbKeyA, m_OnBlackboardChanged);
             Blackboard.UnregisterChangeEvent(bbKeyB, m_OnBlackboardChanged);

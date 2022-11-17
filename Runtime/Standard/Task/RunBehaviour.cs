@@ -56,11 +56,11 @@ namespace Saro.BT
             }
         }
 
-        public override EStatus OnExecute()
+        public override EStatus OnExecute(float deltaTime)
         {
             if (m_RunningSubTree != null)
             {
-                m_RunningSubTree.Tick();
+                m_RunningSubTree.Tick(deltaTime);
                 return m_RunningSubTree.IsRunning()
                   ? EStatus.Running
                   : m_RunningSubTree.LastStatus();

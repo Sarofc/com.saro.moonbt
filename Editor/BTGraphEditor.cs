@@ -231,7 +231,7 @@ namespace Saro.BT.Designer
             // OnPlayModeStateChanged / Selection.selectionChanged 需要延迟一帧
             while (m_BTGraphView == null)
             {
-                await Task.Yield();
+                await Task.Yield(); // stack overflow?
             }
 
             BehaviorTree tree = null;
@@ -245,6 +245,10 @@ namespace Saro.BT.Designer
                 if (_go.TryGetComponent<TreeComponent>(out var treeComponent))
                 {
                     tree = treeComponent.RuntimeTree != null ? treeComponent.RuntimeTree : treeComponent.TreeAsset;
+                }
+                else if (_go.TryGetComponent<TreeDebugView>(out var debugView))
+                {
+                    tree = debugView.runtimeTree;
                 }
             }
 

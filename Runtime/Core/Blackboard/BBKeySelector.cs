@@ -8,6 +8,9 @@ namespace Saro.BT
     {
         public string keyName;
 
+        public BBKeySelector() { }
+        public BBKeySelector(string keyName) { this.keyName = keyName; }
+
         public static implicit operator string(BBKeySelector keySelector)
         {
             return keySelector.keyName;

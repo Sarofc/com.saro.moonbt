@@ -21,7 +21,7 @@ namespace Saro.BT
             }
         }
 
-        public sealed override EStatus OnExecute()
+        public sealed override EStatus OnExecute(float deltaTime)
         {
             return EStatus.Success;
         }

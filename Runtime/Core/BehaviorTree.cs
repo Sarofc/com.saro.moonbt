@@ -5,6 +5,7 @@ using UnityEngine;
 using System.Text;
 using Newtonsoft.Json;
 using UnityEngine.Serialization;
+using Saro.Entities;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -14,6 +15,15 @@ using Saro.BT.Utility;
 
 namespace Saro.BT
 {
+    /*
+     * TODO
+     * 
+     * 1. json保存
+     * 2. action执行完，立即调用reset清理接口
+     * 3. stop整个树是，正在执行的action也要调用reset
+     * 
+     */
+
     [CreateAssetMenu(menuName = "Gameplay/" + nameof(BehaviorTree))]
     public partial class BehaviorTree
         : ScriptableObject // TODO 这个加个editor宏，就可以打包后，直接使用json之类的来加载了，json导出忽略editor下的字段
@@ -33,10 +43,9 @@ namespace Saro.BT
 
         /// <summary>
         /// 行为树的拥有者
-        /// <code>ecs 可以搞个Mono脚本索引这个行为树</code>
         /// </summary>
         [JsonIgnore]
-        public object actor;
+        public EcsEntity actor;
 
         [JsonIgnore]
         public int Height { get; internal set; }
@@ -58,7 +67,7 @@ namespace Saro.BT
 
         #endregion
 
-        public static BehaviorTree CreateRuntimeTree(BehaviorTree treeAsset, object actor)
+        public static BehaviorTree CreateRuntimeTree(BehaviorTree treeAsset, EcsEntity actor)
         {
             var runtimeTree = Clone(treeAsset);
 
@@ -128,12 +137,12 @@ namespace Saro.BT
             // TODO timer
         }
 
-        public void Tick()
+        public void Tick(float deltaTime)
         {
             if (IsTreeInitialized && m_MainIterator.IsRunning)
             {
-                TickTimers();
-                m_MainIterator.Tick();
+                TickTimers(deltaTime);
+                m_MainIterator.Tick(deltaTime);
             }
         }
 
@@ -145,35 +154,19 @@ namespace Saro.BT
             }
         }
 
-        public void SetNodes(BTNode root) => SetNodes(TreeTraversal.PreOrder(root));
-
-        // TODO api 优化
-        public void SetNodes(IEnumerable<BTNode> nodes)
-        {
-            this.nodes = nodes.ToArray();
-            for (int i = 0; i < this.nodes.Length; i++)
-            {
-                BTNode node = this.nodes[i];
-                node.Tree = this;
-                node.preOrder = i;
-            }
-        }
-
-        public static void Interrupt(BTNode subroot) => subroot.Iterator.Interrupt(subroot);
-
-        public void Interrupt() => Interrupt(Root);
+        public void Interrupt() => Root.Iterator.Interrupt(Root);
 
         public void AddTimer(Timer timer) => m_ActiveTimers.Add(timer);
 
         public void RemoveTimer(Timer timer) => m_ActiveTimers.Remove(timer);
 
-        private void TickTimers()
+        private void TickTimers(float deltaTime)
         {
             var timers = m_ActiveTimers.Data;
             var count = m_ActiveTimers.Data.Count;
             for (int i = 0; i < count; i++)
             {
-                timers[i].Tick(Time.deltaTime);
+                timers[i].Tick(deltaTime);
             }
 
             m_ActiveTimers.AddAndRemoveQueued();
@@ -248,6 +241,17 @@ namespace Saro.BT
             }
 
             return sb.ToString();
+        }
+
+        internal void SetNodes_Editor(IEnumerable<BTNode> nodes)
+        {
+            this.nodes = nodes.ToArray();
+            for (int i = 0; i < this.nodes.Length; i++)
+            {
+                BTNode node = this.nodes[i];
+                node.Tree = this;
+                node.preOrder = i;
+            }
         }
 
         [SerializeField]

@@ -82,7 +82,7 @@ namespace Saro.BT.Designer
 
             tree.graphPosition = GraphView.viewTransform.position;
             tree.graphScale = GraphView.viewTransform.scale;
-            tree.SetNodes(nodes);
+            tree.SetNodes_Editor(nodes);
         }
 
         protected override void OnClearStyle()
@@ -120,7 +120,7 @@ namespace Saro.BT.Designer
             nodePosition = new Rect(100, 200, 0, 0);
         }
 
-        public override EStatus OnExecute()
+        public override EStatus OnExecute(float deltaTime)
         {
             throw new NotImplementedException();
         }

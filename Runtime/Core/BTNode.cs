@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json;
+using Saro.Entities;
 using Saro.SEditor;
 using UnityEngine;
 
@@ -32,7 +31,7 @@ namespace Saro.BT
         protected BTBlackboard Blackboard => Tree.Blackboard;
 
         [JsonIgnore]
-        protected object Actor => Tree.actor;
+        protected EcsEntity Actor => Tree.actor;
 
         [JsonIgnore]
         internal int preOrder = k_InvalidPreOrder;
@@ -67,7 +66,7 @@ namespace Saro.BT
         /// 执行节点
         /// </summary>
         /// <returns></returns>
-        public abstract EStatus OnExecute();
+        public abstract EStatus OnExecute(float deltaTime);
 
         /// <summary>
         /// 此节点开始执行时调用

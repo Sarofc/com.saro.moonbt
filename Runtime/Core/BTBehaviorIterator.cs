@@ -35,13 +35,13 @@ namespace Saro.BT
             m_RequestedTraversals = new Queue<int>(maxTraversalLen);
         }
 
-        public void Tick()
+        public void Tick(float deltaTime)
         {
             CallOnEnterOnQueuedNodes();
 
             var index = m_Traversal.Peek();
             var node = m_Tree.nodes[index];
-            var status = node.OnExecute();
+            var status = node.OnExecute(deltaTime);
 
             LastExecutedStatus = status;
 

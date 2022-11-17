@@ -18,7 +18,7 @@ namespace Saro.BT
         [Tooltip("the type of message to display.")]
         public ELogType logType = ELogType.Info;
 
-        public override EStatus OnExecute()
+        public override EStatus OnExecute(float deltaTime)
         {
             switch (logType)
             {

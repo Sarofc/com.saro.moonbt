@@ -14,6 +14,8 @@ namespace Saro.BT
         Both = 3,
     }
 
+    // TODO 简化概念，不再提供默认逻辑，子类自己实现
+
     [BTNode("Conditional_Decorator_24x")]
     public abstract class BTDecorator : BTAuxiliary
     {
@@ -22,78 +24,96 @@ namespace Saro.BT
         public EAbortType abortType = EAbortType.None;
 
         [JsonIgnore]
-        public bool IsObserving { get; protected set; } = false;
+        protected bool IsObserving = false;
 
         [JsonIgnore]
-        protected bool IsActive { get; set; } = false;
+        protected bool IsActive = false;
 
-        public override void OnEnter()
+        public sealed override void OnEnter()
         {
             IsActive = true;
 
-            if (abortType != EAbortType.None)
-            {
-                if (!IsObserving)
-                {
-                    IsObserving = true;
-                    OnObserverBegin();
-                }
-            }
+            OnDecoratorEnter();
 
-            if (Condition())
-            {
-                base.OnEnter();
-            }
+            // old
+            //if (abortType != EAbortType.None)
+            //{
+            //    ObserverBegin();
+            //}
+
+            //if (EvaluateCondition())
+            //{
+            //    base.OnEnter();
+            //}
         }
 
-        public override void OnExit()
+        public sealed override void OnExit()
         {
-            if (abortType == EAbortType.None || abortType == EAbortType.Self)
-            {
-                if (IsObserving)
-                {
-                    OnObserverEnd();
-                    IsObserving = false;
-                }
-            }
+            OnDecoratorExit();
+
+            // old
+            //if (abortType == EAbortType.None || abortType == EAbortType.Self)
+            //{
+            //    ObserverEnd();
+            //}
 
             IsActive = false;
         }
 
+        protected abstract void OnDecoratorEnter();
+        protected abstract void OnDecoratorExit();
+
         public sealed override void OnParentExit()
         {
             // 装饰器的父组合节点推出后，需要移除所有监听
+            ObserverEnd();
 
+            base.OnParentExit();
+        }
+
+        protected void ObserverBegin()
+        {
+            if (!IsObserving)
+            {
+                IsObserving = true;
+                OnObserverBegin();
+            }
+        }
+
+        protected void ObserverEnd()
+        {
             if (IsObserving)
             {
                 IsObserving = false;
                 OnObserverEnd();
             }
-
-            base.OnParentExit();
         }
 
         /// <summary>
         /// register event
         /// </summary>
-        public virtual void OnObserverBegin() { }
+        protected virtual void OnObserverBegin() { }
 
         /// <summary>
         /// unregister event
         /// </summary>
-        public virtual void OnObserverEnd() { }
+        protected virtual void OnObserverEnd() { }
 
-        public override EStatus OnExecute()
+        public override EStatus OnExecute(float deltaTime)
         {
             return Iterator.LastChildExitStatus.GetValueOrDefault(EStatus.Failure);
         }
 
-
-        public virtual bool Condition() => true;
+        /// <summary>
+        /// <code>false: AbortCurrentBranch</code>
+        /// <code>true: AbortLowerPriorityBranch</code>
+        /// </summary>
+        /// <returns></returns>
+        protected virtual bool EvaluateCondition() => true;
 
         protected void Evaluate()
         {
-            var result = Condition();
+            var result = EvaluateCondition();
 
             if (IsActive && !result)
             {

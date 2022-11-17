@@ -22,7 +22,7 @@
 //        {
 //        }
 
-//        public override bool Condition()
+//        protected override bool Condition()
 //        {
 //            if (type == null || !Blackboard.Contains(key)) return false;
 

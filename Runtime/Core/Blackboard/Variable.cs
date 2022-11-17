@@ -1,4 +1,5 @@
 ﻿using System;
+using Saro.Entities;
 
 namespace Saro.BT
 {
@@ -10,7 +11,7 @@ namespace Saro.BT
 
         public abstract void SetRawValue(object val);
 
-        public abstract bool Compare(object other);
+        public abstract bool Compare(Variable other);
 
         public abstract void Reset();
     }
@@ -25,7 +26,7 @@ namespace Saro.BT
 
         public override void Reset() => value = default;
 
-        public override bool Compare(object other)
+        public override bool Compare(Variable other)
         {
             if (other is Variable<T> _other)
             {
@@ -59,4 +60,7 @@ namespace Saro.BT
 
     [Serializable]
     public class Variable_Object : Variable<object> { }
+
+    [Serializable]
+    public class Variable_EcsEntity : Variable<EcsEntity> { }
 }

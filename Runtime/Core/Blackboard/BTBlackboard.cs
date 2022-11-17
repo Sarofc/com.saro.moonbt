@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Saro.Entities;
 using Saro.Utility;
 using UnityEngine;
 
@@ -61,7 +62,7 @@ namespace Saro.BT
             var index = Data.GetKeyIndexByName(keyName);
 
             if (index == -1)
-                Debug.LogError("keyName not found: " + keyName);
+                Log.ERROR("keyName not found: " + keyName);
 
             return index;
         }
@@ -98,6 +99,10 @@ namespace Saro.BT
             else if (value is Variable<object> _object)
             {
                 SetObjectValue(keyName, _object.GetValue());
+            }
+            else if(value is Variable<EcsEntity> _entity)
+            {
+                SetValue(keyName, _entity.GetValue());
             }
             else if (value is Variable<Vector3> _vector3)
             {
@@ -136,7 +141,7 @@ namespace Saro.BT
 
             if (MemoryUtility.IsNullRef(ref refValue))
             {
-                Debug.LogError("null ref. index: " + index);
+                Log.ERROR("null ref. index: " + index);
                 return;
             }
 
@@ -159,7 +164,7 @@ namespace Saro.BT
 
             if (MemoryUtility.IsNullRef(ref refValue))
             {
-                Debug.LogError("null ref. index: " + index);
+                Log.ERROR("null ref. index: " + index);
                 return;
             }
 
@@ -187,7 +192,7 @@ namespace Saro.BT
         public void RegisterChangeEvent(int index, Action callback)
         {
             var evt = new ChangedEvent { index = index, callback = callback };
-            Debug.Assert(!m_Observers.Contains(evt), "duplicated event. index: " + index);
+            Log.Assert(!m_Observers.Contains(evt), "duplicated event. index: " + index);
 
             m_Observers.Add(evt);
         }
@@ -202,7 +207,7 @@ namespace Saro.BT
         {
             var evt = new ChangedEvent { index = index, callback = callback };
             var removeAny = m_Observers.Remove(evt);
-            Debug.Assert(removeAny, "no event to remove. index: " + index);
+            Log.Assert(removeAny, "no event to remove. index: " + index);
         }
 
         private void FireChangeEvent(int index)
