@@ -35,7 +35,9 @@ namespace Saro.BT
         {
             base.OnValidate();
 
+#if UNITY_EDITOR
             subtreeAsset = m_SubTreeAsset == null ? null : m_SubTreeAsset.name;
+#endif
         }
 
         public override void OnInitialize()

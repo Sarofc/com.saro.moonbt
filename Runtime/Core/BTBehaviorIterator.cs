@@ -59,7 +59,9 @@ namespace Saro.BT
             {
                 OnCompleted?.Invoke();
 
+#if UNITY_EDITOR
                 INFO($"[{m_Tree.name}] iterator done!");
+#endif
             }
         }
 
@@ -85,7 +87,9 @@ namespace Saro.BT
 
                 node.OnEnter();
 
+#if UNITY_EDITOR
                 INFO($"[{m_Tree.name}] enter <color=green>{node.GetType().Name}: {node.preOrder}</color>");
+#endif
 
                 OnChildEnter(node);
             }
@@ -140,8 +144,10 @@ namespace Saro.BT
 
                 Traverse(parent.GetChildAt(abortBranchIndex));
 
+#if UNITY_EDITOR
                 INFO($"[{m_Tree.name}] <color=red>abort</color> *{parent.GetType().Name}: {parent.preOrder}* branch index: {abortBranchIndex}");
                 INFO($"[{m_Tree.name}] ------traversal abort: {string.Join(",", m_Traversal)}");
+#endif
             }
         }
 
@@ -186,8 +192,10 @@ namespace Saro.BT
 
             node.OnExit();
 
+#if UNITY_EDITOR
             INFO($"[{m_Tree.name}] exit *{LastExecutedStatus}* <color=green>{node.GetType().Name}: {node.preOrder}</color>");
             INFO($"[{m_Tree.name}] ------traversal pop: {string.Join(",", m_Traversal)}");
+#endif
 
             return node;
         }

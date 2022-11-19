@@ -54,8 +54,10 @@ namespace Saro.BT
 
         private void OnDestroy()
         {
+#if UNITY_EDITOR
             if (m_RuntimeTree != null)
                 Destroy(m_RuntimeTree);
+#endif
         }
     }
 }
