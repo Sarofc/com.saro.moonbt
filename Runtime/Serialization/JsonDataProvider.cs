@@ -73,8 +73,6 @@ namespace Saro.BT
                 var config = AssetDatabase.LoadAssetAtPath<T>(path);
                 list.Add(config);
 
-                config.hideFlags = HideFlags.None;
-                EditorUtility.SetDirty(config);
                 //if (config is IDataValidator validator)
                 //{
                 //    validator.OnValidate();
