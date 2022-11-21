@@ -136,14 +136,19 @@ namespace Saro.BT.Designer
                 var btnExport = m_Uxml.Q<Button>("BtnExport");
                 btnExport.clicked += () =>
                 {
-                    if (CurretnTree != null)
-                    {
-                        var json = JsonHelper.ToJson(CurretnTree);
-                        var path = AssetDatabase.GetAssetPath(CurretnTree) + ".json";
-                        File.WriteAllText(path, json);
-                        AssetDatabase.SaveAssets();
-                        AssetDatabase.Refresh();
-                    }
+                    // new
+                    new JsonDataProvider<BehaviorTree>().Save();
+                    AssetDatabase.Refresh();
+
+                    // old
+                    //if (CurretnTree != null)
+                    //{
+                    //    var json = JsonHelper.ToJson(CurretnTree);
+                    //    var path = AssetDatabase.GetAssetPath(CurretnTree) + ".json";
+                    //    File.WriteAllText(path, json);
+                    //    AssetDatabase.SaveAssets();
+                    //    AssetDatabase.Refresh();
+                    //}
                 };
 
                 var btnSave = m_Uxml.Q<Button>("BtnSave");

@@ -3,7 +3,8 @@
     "rootNamespace": "",
     "references": [
         "Saro.MGF",
-        "Saro.Entities"
+        "Saro.Entities",
+        "UniTask"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

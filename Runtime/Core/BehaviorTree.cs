@@ -49,6 +49,8 @@ namespace Saro.BT
 
         #region Serialization
 
+        public string id;
+
         [FormerlySerializedAs("Nodes")]
         [SerializeReference]
         [JsonProperty]
@@ -183,11 +185,10 @@ namespace Saro.BT
         public BehaviorTree Clone()
         {
             var newTree = new BehaviorTree();
+            newTree.id = id;
             newTree.nodes = new BTNode[nodes.Length];
             for (int i = 0; i < nodes.Length; i++)
-            {
                 newTree.nodes[i] = nodes[i].Clone();
-            }
             newTree.blackboardData = blackboardData;
             return newTree;
         }
@@ -195,16 +196,67 @@ namespace Saro.BT
 
     partial class BehaviorTree
     {
+        private static Dictionary<string, BehaviorTree> s_Templates;
+#if UNITY_EDITOR
+        public static Dictionary<string, BehaviorTree> s_Templates_Editor;
+#endif
+        public static void Load(List<BehaviorTree> list)
+        {
+#if UNITY_EDITOR
+            var finds = AssetDatabase.FindAssets($"t:Saro.BT.BehaviorTree", new[] { "Assets" });
+
+            if (s_Templates_Editor == null)
+                s_Templates_Editor = new(finds.Length);
+            else
+                s_Templates_Editor.Clear();
+
+            foreach (var item in finds)
+            {
+                var path = AssetDatabase.GUIDToAssetPath(item);
+                var tree = AssetDatabase.LoadAssetAtPath<BehaviorTree>(path);
+                if (tree)
+                {
+                    s_Templates_Editor.Add(tree.name, tree);
+                }
+                else
+                {
+                    Log.ERROR($"Editor BehaviorTree '{path}' is invalid");
+                }
+            }
+#endif
+
+            if (s_Templates == null)
+                s_Templates = new(list.Count);
+            else
+                s_Templates.Clear();
+
+            foreach (var item in list)
+            {
+                // TODO 检查序列化的数据是否和so一致，提前在编辑器下发现问题
+
+                s_Templates.Add(item.id, item);
+            }
+        }
+
         // TODO 通过id，加载实例，池化策略：以id为准，同一id，数据一致，都是静态的数据
-        //public static BehaviorTree CreateRuntimeTree(string template, EcsEntity actor)
-        //{
-        //    var templateTree =
-        //}
+        public static BehaviorTree CreateRuntimeTree(string treeId, EcsEntity actor)
+        {
+#if UNITY_EDITOR //&& false
+            var map = s_Templates_Editor;
+#else
+            var map = s_Templates;
+#endif
+            if (map.TryGetValue(treeId, out var tree))
+            {
+                return CreateRuntimeTree(tree, actor);
+            }
+            Log.ERROR("CreateRuntimeTree failed. treeId: " + treeId);
+            return null;
+        }
 
         public static BehaviorTree CreateRuntimeTree(BehaviorTree template, EcsEntity actor)
         {
             var runtimeTree = template.Clone();
-
             if (runtimeTree != null)
             {
 #if UNITY_EDITOR
@@ -225,11 +277,6 @@ namespace Saro.BT
         {
             // TODO pooling
             runtimeTree.ResetData();
-        }
-
-        public static BehaviorTree FromJson(string json)
-        {
-            return JsonHelper.FromJson(json);
         }
     }
 
@@ -272,6 +319,8 @@ namespace Saro.BT
 
         internal void OnValidate()
         {
+            id = this.name;
+
             if (nodes != null)
             {
                 foreach (var node in nodes)
