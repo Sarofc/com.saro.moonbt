@@ -1,11 +1,9 @@
 {
-    "name": "com.saro.moonbt",
-    "version": "0.0.1",
-    "displayName": "Moon Behavior Tree",
-    "description": "",
-    "unity": "2021.3",
-    "dependencies": {},
-    "author": {
-        "name": "saro"
-    }
+  "name": "com.saro.moonbt",
+  "version": "0.1.0",
+  "displayName": "Moon Behavior Tree",
+  "unity": "2021.3",
+  "author": {
+    "name": "saro"
+  }
 }
