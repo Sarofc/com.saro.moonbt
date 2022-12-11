@@ -28,7 +28,7 @@ namespace Saro.BT
             var bytes = IAssetManager.Current.GetRawFileBytes(m_FilePath);
             var json = Encoding.UTF8.GetString(bytes);
 #endif
-            var configs = JsonHelper.DeserializeObject<List<T>>(json);
+            var configs = JsonHelper.FromJson<List<T>>(json);
 
             // TODO 检测数据合法性
 
@@ -45,7 +45,7 @@ namespace Saro.BT
             var json = Encoding.UTF8.GetString(bytes);
             Log.INFO($"{typeof(T).Name} {json}"); // 执行了
 #endif
-            var configs = JsonHelper.DeserializeObject<List<T>>(json); // 游戏画面卡死了，cpu100%
+            var configs = JsonHelper.FromJson<List<T>>(json); // 游戏画面卡死了，cpu100%
             Log.INFO($"{typeof(T).Name} count: {configs.Count}"); // 未执行！
 
             // TODO 检测数据合法性
@@ -79,7 +79,7 @@ namespace Saro.BT
                 //}
             }
 
-            var json = JsonHelper.SerializeObject(list);
+            var json = JsonHelper.ToJson(list);
             var directory = Path.GetDirectoryName(file);
             if (!Directory.Exists(directory))
             {

@@ -443,7 +443,7 @@ namespace Saro.BT.Designer
             }
             if (nodes.Count > 0)
             {
-                return JsonHelper.SerializeObject(copyData);
+                return JsonHelper.ToJson(copyData);
             }
 
             return null;
@@ -457,7 +457,7 @@ namespace Saro.BT.Designer
 
         private void UnserializeAndPasteImplementation(string operationName, string data)
         {
-            var copyData = JsonHelper.DeserializeObject<BTCopyPasteData>(data);
+            var copyData = JsonHelper.FromJson<BTCopyPasteData>(data);
 
             var nodes = copyData.nodes;
             var edges = copyData.edges;

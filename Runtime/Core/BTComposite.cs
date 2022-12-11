@@ -22,7 +22,7 @@ namespace Saro.BT
 
         public override BTNode Clone()
         {
-            var newNode = MemberwiseClone() as BTComposite;
+            var newNode = MemberwiseClone() as BTNode;
             return newNode;
         }
 

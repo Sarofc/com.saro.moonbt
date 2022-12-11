@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-using System;
-using System.Linq;
+﻿using System;
 using System.Text;
 
 namespace Saro.BT
@@ -20,11 +17,26 @@ namespace Saro.BT
             Delayed = 1
         }
 
+        public override BTNode Clone()
+        {
+            var newNode = new SimpleParallel();
+
+            newNode.m_BranchIterator = new BTBehaviorIterator[m_BranchIterator.Length];
+            Array.Copy(m_BranchIterator, newNode.m_BranchIterator, m_BranchIterator.Length);
+
+            newNode.m_ChildrenStatus = new EStatus[m_ChildrenStatus.Length];
+            Array.Copy(m_ChildrenStatus, newNode.m_ChildrenStatus, m_ChildrenStatus.Length);
+
+            newNode.finishMode = finishMode;
+
+            return newNode;
+        }
+
         public override void OnInitialize()
         {
-            if (ChildCount() != 2) throw new System.Exception("SimpleParallel's children must equal to 2");
-
             base.OnInitialize();
+
+            if (ChildCount() != 2) throw new System.Exception("SimpleParallel's children must equal to 2");
 
             var count = ChildCount();
             m_ChildrenStatus = new EStatus[count];

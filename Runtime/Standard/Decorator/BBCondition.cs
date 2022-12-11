@@ -90,11 +90,10 @@ namespace Saro.BT
             Blackboard.UnregisterChangeEvent(bbKey, m_OnBlackboardChanged);
         }
 
+#if UNITY_EDITOR
         public override void Description(StringBuilder builder)
         {
             base.Description(builder);
-
-#if UNITY_EDITOR
 
             var keyType = bbKey.GetBlackboardKeyType();
             if (keyType == null)
@@ -103,7 +102,7 @@ namespace Saro.BT
                 return;
             }
 
-            var keyIndex = bbKey.data.GetKeyIndexByName(bbKey);
+            //var keyIndex = bbKey.data.GetKeyIndexByName(bbKey);
 
             builder.Append("'")
                 .Append(bbKey)
@@ -153,10 +152,8 @@ namespace Saro.BT
                     }
                     break;
             }
-#endif
         }
 
-#if UNITY_EDITOR
         private Type GetOpType
         {
             get

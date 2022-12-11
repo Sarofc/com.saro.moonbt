@@ -332,40 +332,4 @@ namespace Saro.BT.Designer
             return $"{NodeBehavior.GetType().Name}";
         }
     }
-
-    /* // TODO 迭代器支持，考虑像transform的foreach一样，第一个元素是自身
-    public partial class BTGraphNode
-    {
-        /// <summary>
-        /// Children Iterator
-        /// </summary>
-        /// <returns></returns>
-        public Enumerator GetEnumerator()
-        {
-            return new Enumerator(this);
-        }
-
-        public struct Enumerator : IEnumerator<BTGraphNode>
-        {
-            private BTGraphNode m_Node;
-            private int m_Index;
-
-            public Enumerator(BTGraphNode node)
-            {
-                m_Node = node;
-                m_Index = -1;
-            }
-
-            public BTGraphNode Current => m_Node.GetChildAt(m_Index);
-
-            object IEnumerator.Current => m_Node.GetChildAt(m_Index);
-
-            public void Dispose() { }
-
-            public bool MoveNext() => ++m_Index < m_Node.ChildCount();
-
-            public void Reset() { }
-        }
-    }
-    */
 }

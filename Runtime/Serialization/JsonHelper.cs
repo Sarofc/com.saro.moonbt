@@ -19,22 +19,12 @@ namespace Saro.BT
             Converters = TypeUtility.GetSubClassTypesAllAssemblies(typeof(PartialConverter)).Select(t => Activator.CreateInstance(t) as JsonConverter).ToArray(),
         };
 
-        public static string ToJson(BehaviorTree tree)
-        {
-            return JsonConvert.SerializeObject(tree, s_Settings);
-        }
-
-        public static BehaviorTree FromJson(string json)
-        {
-            return JsonConvert.DeserializeObject<BehaviorTree>(json, s_Settings);
-        }
-
-        public static string SerializeObject(object obj)
+        public static string ToJson(object obj)
         {
             return JsonConvert.SerializeObject(obj, s_Settings);
         }
 
-        public static T DeserializeObject<T>(string json)
+        public static T FromJson<T>(string json)
         {
             return JsonConvert.DeserializeObject<T>(json, s_Settings);
         }

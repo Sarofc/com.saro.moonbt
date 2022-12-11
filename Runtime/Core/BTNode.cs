@@ -39,6 +39,7 @@ namespace Saro.BT
         [JsonIgnore]
         public BTNode Parent { get; set; }
 
+        [JsonIgnore]
         public BTBehaviorIterator Iterator { get; internal set; }
 
         protected internal int childIndex = 0;

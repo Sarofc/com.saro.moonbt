@@ -61,17 +61,19 @@ namespace Saro.BT
 
         protected abstract void ServiceTick();
 
+        public sealed override void OnChildEnter(int childIndex) { }
+
+        public sealed override void OnChildExit(int childIndex, EStatus status) { }
+
+        public sealed override void OnParentExit() { base.OnParentExit(); }
+
+#if UNITY_EDITOR
         public override void Description(StringBuilder builder)
         {
             builder.AppendFormat("Tick every {0:0.00} s", timer.GetIntervalInfo())
                 .AppendLine()
                 .Append(restartTimerOnEnter ? "Restart timer on enter" : "Resume timer on enter");
         }
-
-        public sealed override void OnChildEnter(int childIndex) { }
-
-        public sealed override void OnChildExit(int childIndex, EStatus status) { }
-
-        public sealed override void OnParentExit() { base.OnParentExit(); }
+#endif
     }
 }

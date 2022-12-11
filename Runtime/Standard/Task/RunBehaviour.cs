@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using UnityEngine;
+using UnityEngine.Scripting.APIUpdating;
 
 namespace Saro.BT
 {
@@ -65,6 +66,11 @@ namespace Saro.BT
 
         public override void OnEnter()
         {
+            if(m_RunningSubTree == null)
+            {
+                m_RunningSubTree = BehaviorTree.CetOrCreateRuntimeTree(subtreeAsset, Actor);
+            }
+
             m_RunningSubTree.BeginTraversal();
         }
 

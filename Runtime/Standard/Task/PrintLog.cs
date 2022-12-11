@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 using UnityEngine;
 using UnityEngine.Scripting.APIUpdating;
 
@@ -8,7 +6,7 @@ namespace Saro.BT
 {
     [MovedFrom(true, sourceClassName: "Print")]
     [BTNode("Task_24x", "“打印日志”")]
-    public class PrintLog : BTTask
+    public sealed class PrintLog : BTTask
     {
         public enum ELogType : byte { Info, Warning, Error }
 
@@ -23,13 +21,13 @@ namespace Saro.BT
             switch (logType)
             {
                 case ELogType.Info:
-                    Debug.Log(message);
+                    Log.INFO(message);
                     break;
                 case ELogType.Warning:
-                    Debug.LogWarning(message);
+                    Log.WARN(message);
                     break;
                 case ELogType.Error:
-                    Debug.LogError(message);
+                    Log.ERROR(message);
                     break;
                 default:
                     break;
@@ -57,9 +55,7 @@ namespace Saro.BT
 
             // Nothing to display.
             if (displayed.Length == 0)
-            {
                 return;
-            }
 
             if (logType != ELogType.Info)
             {
@@ -80,5 +76,4 @@ namespace Saro.BT
             }
         }
     }
-
 }

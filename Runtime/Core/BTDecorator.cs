@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Newtonsoft.Json;
+﻿using System.Text;
 using Saro.SEditor;
 
 namespace Saro.BT
@@ -9,12 +6,21 @@ namespace Saro.BT
     public enum EAbortType
     {
         None = 0,
+        /// <summary>
+        /// 打断比此节点优先级低的节点，perOrder越大优先级越低
+        /// </summary>
         LowerPriority = 1,
+        /// <summary>
+        /// 打断此节点
+        /// </summary>
         Self = 2,
+        /// <summary>
+        /// LowerPriority 和 Self 都有效
+        /// </summary>
         Both = 3,
     }
 
-    // TODO 简化概念，不再提供默认逻辑，子类自己实现
+    // 不再提供默认逻辑，子类自己实现
 
     [BTNode("Conditional_Decorator_24x")]
     public abstract class BTDecorator : BTAuxiliary
@@ -23,11 +29,8 @@ namespace Saro.BT
         [Separator]
         public EAbortType abortType = EAbortType.None;
 
-        [JsonIgnore]
-        protected bool IsObserving = false;
-
-        [JsonIgnore]
-        protected bool IsActive = false;
+        protected bool m_IsObserving = false;
+        protected bool m_IsActive = false;
 
         public override BTNode Clone()
         {
@@ -37,33 +40,16 @@ namespace Saro.BT
 
         public sealed override void OnEnter()
         {
-            IsActive = true;
+            m_IsActive = true;
 
             OnDecoratorEnter();
-
-            // old
-            //if (abortType != EAbortType.None)
-            //{
-            //    ObserverBegin();
-            //}
-
-            //if (EvaluateCondition())
-            //{
-            //    base.OnEnter();
-            //}
         }
 
         public sealed override void OnExit()
         {
             OnDecoratorExit();
 
-            // old
-            //if (abortType == EAbortType.None || abortType == EAbortType.Self)
-            //{
-            //    ObserverEnd();
-            //}
-
-            IsActive = false;
+            m_IsActive = false;
         }
 
         protected abstract void OnDecoratorEnter();
@@ -79,29 +65,29 @@ namespace Saro.BT
 
         protected void ObserverBegin()
         {
-            if (!IsObserving)
+            if (!m_IsObserving)
             {
-                IsObserving = true;
+                m_IsObserving = true;
                 OnObserverBegin();
             }
         }
 
         protected void ObserverEnd()
         {
-            if (IsObserving)
+            if (m_IsObserving)
             {
-                IsObserving = false;
+                m_IsObserving = false;
                 OnObserverEnd();
             }
         }
 
         /// <summary>
-        /// register event
+        /// 注册观察者
         /// </summary>
         protected virtual void OnObserverBegin() { }
 
         /// <summary>
-        /// unregister event
+        /// 反注册观察者
         /// </summary>
         protected virtual void OnObserverEnd() { }
 
@@ -111,6 +97,7 @@ namespace Saro.BT
         }
 
         /// <summary>
+        /// 评估打断条件
         /// <code>false: AbortCurrentBranch</code>
         /// <code>true: AbortLowerPriorityBranch</code>
         /// </summary>
@@ -121,7 +108,7 @@ namespace Saro.BT
         {
             var result = EvaluateCondition();
 
-            if (IsActive && !result)
+            if (m_IsActive && !result)
             {
                 AbortCurrentBranch();
             }
@@ -198,6 +185,7 @@ namespace Saro.BT
             }
         }
 
+#if UNITY_EDITOR
         public override void Description(StringBuilder builder)
         {
             base.Description(builder);
@@ -205,5 +193,6 @@ namespace Saro.BT
             if (abortType != EAbortType.None)
                 builder.AppendLine($"(abort: {abortType})");
         }
+#endif
     }
 }

@@ -274,7 +274,7 @@ namespace Saro.BT.Designer
                 RemoveNotification();
             }
 
-            m_Uxml.Q<Label>("TreeAsset").text = $"[{(tree == null ? "None" : tree.name)}]";
+            m_Uxml.Q<Label>("TreeAsset").text = $"[{(tree == null ? "None" : $"{tree.DebugName}")}]";
         }
 
 

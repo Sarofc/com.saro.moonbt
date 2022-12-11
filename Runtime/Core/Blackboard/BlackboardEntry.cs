@@ -14,5 +14,10 @@ namespace Saro.BT
 
         [SerializeReference]
         public BlackboardKeyType keyType;
+
+        public override string ToString()
+        {
+            return $"{keyName}";
+        }
     }
 }

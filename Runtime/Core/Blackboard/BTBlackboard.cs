@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Saro.Entities;
 using Saro.Utility;
 using UnityEngine;
@@ -15,20 +16,13 @@ namespace Saro.BT
         3. blackboard资源上，不能编辑value，只有key，value则可以通过service节点赋值上去
 
         5. blackboarddata 是数据，只保存key
-        6. Variable是运行时保存的value
+        6. Variable 是运行时保存的value
 
         7. 不支持运行时删除黑板键，只支持运行时添加
 
      */
-    public class BTBlackboard
+    public partial class BTBlackboard
     {
-        public BlackboardData Data { get; private set; }
-
-        /// <summary>
-        /// 与 <see cref="BlackboardData.entries"/> 一一对应
-        /// </summary>
-        public List<Variable> Variables { get; private set; }
-
         public struct ChangedEvent : IEquatable<ChangedEvent>
         {
             public int index;
@@ -39,6 +33,13 @@ namespace Saro.BT
                 return index == other.index && callback == other.callback;
             }
         }
+
+        public BlackboardData Data { get; private set; }
+
+        /// <summary>
+        /// 与 <see cref="BlackboardData.entries"/> 一一对应
+        /// </summary>
+        public List<Variable> Variables { get; private set; }
 
         private readonly List<ChangedEvent> m_Observers = new();
 
@@ -62,7 +63,7 @@ namespace Saro.BT
             var index = Data.GetKeyIndexByName(keyName);
 
             if (index == -1)
-                Log.ERROR("keyName not found: " + keyName);
+                Log.ERROR("[Blackboard] keyName not found: " + keyName);
 
             return index;
         }
@@ -100,7 +101,7 @@ namespace Saro.BT
             {
                 SetObjectValue(keyName, _object.GetValue());
             }
-            else if(value is Variable<EcsEntity> _entity)
+            else if (value is Variable<EcsEntity> _entity)
             {
                 SetValue(keyName, _entity.GetValue());
             }
@@ -141,7 +142,7 @@ namespace Saro.BT
 
             if (MemoryUtility.IsNullRef(ref refValue))
             {
-                Log.ERROR("null ref. index: " + index);
+                Log.ERROR("[Blackboard] null ref. index: " + index);
                 return;
             }
 
@@ -164,7 +165,7 @@ namespace Saro.BT
 
             if (MemoryUtility.IsNullRef(ref refValue))
             {
-                Log.ERROR("null ref. index: " + index);
+                Log.ERROR("[Blackboard] null ref. index: " + index);
                 return;
             }
 
@@ -192,7 +193,7 @@ namespace Saro.BT
         public void RegisterChangeEvent(int index, Action callback)
         {
             var evt = new ChangedEvent { index = index, callback = callback };
-            Log.Assert(!m_Observers.Contains(evt), "duplicated event. index: " + index);
+            Log.Assert(!m_Observers.Contains(evt), "[Blackboard] duplicated event. index: " + index);
 
             m_Observers.Add(evt);
         }
@@ -207,7 +208,7 @@ namespace Saro.BT
         {
             var evt = new ChangedEvent { index = index, callback = callback };
             var removeAny = m_Observers.Remove(evt);
-            Log.Assert(removeAny, "no event to remove. index: " + index);
+            Log.Assert(removeAny, "[Blackboard] no event to remove. index: " + index);
         }
 
         private void FireChangeEvent(int index)
@@ -247,4 +248,35 @@ namespace Saro.BT
             public void Reset() => m_Index = -1;
         }
     }
+
+#if UNITY_EDITOR
+
+    [DebuggerTypeProxy(typeof(BTBlackboardDebugView))]
+    partial class BTBlackboard
+    {
+        internal class BTBlackboardDebugView
+        {
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            private BTBlackboard m_Blackboard;
+
+            public List<KeyValuePair<BlackboardEntry, Variable>> Pairs
+            {
+                get
+                {
+                    var list = new List<KeyValuePair<BlackboardEntry, Variable>>();
+                    foreach (var (entry, variable) in m_Blackboard)
+                        list.Add(new KeyValuePair<BlackboardEntry, Variable>(entry, variable));
+                    return list;
+                }
+            }
+
+            public List<ChangedEvent> Observers => m_Blackboard.m_Observers;
+
+            public BTBlackboardDebugView(BTBlackboard blackboard)
+            {
+                m_Blackboard = blackboard;
+            }
+        }
+    }
+#endif
 }

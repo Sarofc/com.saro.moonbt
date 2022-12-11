@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using System.Text;
 using Newtonsoft.Json;
 using UnityEngine.Serialization;
 using Saro.Entities;
@@ -65,24 +64,19 @@ namespace Saro.BT
 
         /// <summary>
         /// 初始化树
+        /// <code>此时actor未设置</code>
         /// </summary>
         /// <exception cref="NullReferenceException"></exception>
         public void Initialize()
         {
             if (Root == null)
-            {
                 throw new NullReferenceException("Root");
-            }
 
             if (blackboardData != null && blackboardData.entries.Count > 0)
-            {
                 if (Blackboard == null)
-                {
-                    Blackboard = new BTBlackboard(blackboardData);
-                }
-            }
+                    Blackboard = new(blackboardData);
 
-            m_ActiveTimers = new UpdateList<Timer>();
+            m_ActiveTimers = new();
 
             SetupNodes();
 
@@ -185,150 +179,35 @@ namespace Saro.BT
         public BehaviorTree Clone()
         {
             var newTree = new BehaviorTree();
+#if UNITY_EDITOR
+            newTree.name = name;
+#endif
             newTree.id = id;
             newTree.nodes = new BTNode[nodes.Length];
             for (int i = 0; i < nodes.Length; i++)
-                newTree.nodes[i] = nodes[i].Clone();
+            {
+                var newNode = newTree.nodes[i] = nodes[i].Clone();
+
+#if UNITY_EDITOR
+                newNode.breakPoint = nodes[i].breakPoint;
+                newNode.comment = nodes[i].comment;
+#endif
+            }
             newTree.blackboardData = blackboardData;
             return newTree;
         }
-    }
 
-    partial class BehaviorTree
-    {
-        private static Dictionary<string, BehaviorTree> s_Templates;
 #if UNITY_EDITOR
-        public static Dictionary<string, BehaviorTree> s_Templates_Editor;
-#endif
-        public static void Load(List<BehaviorTree> list)
+        public string DebugName
         {
-#if UNITY_EDITOR
-            var finds = AssetDatabase.FindAssets($"t:Saro.BT.BehaviorTree", new[] { "Assets" });
-
-            if (s_Templates_Editor == null)
-                s_Templates_Editor = new(finds.Length);
-            else
-                s_Templates_Editor.Clear();
-
-            foreach (var item in finds)
+            get
             {
-                var path = AssetDatabase.GUIDToAssetPath(item);
-                var tree = AssetDatabase.LoadAssetAtPath<BehaviorTree>(path);
-                if (tree)
-                {
-                    s_Templates_Editor.Add(tree.name, tree);
-                }
+                if (actor.IsAlive())
+                    return $"{id} - {actor}";
                 else
-                {
-                    Log.ERROR($"Editor BehaviorTree '{path}' is invalid");
-                }
+                    return id;
             }
+        }
 #endif
-
-            if (s_Templates == null)
-                s_Templates = new(list.Count);
-            else
-                s_Templates.Clear();
-
-            foreach (var item in list)
-            {
-                // TODO 检查序列化的数据是否和so一致，提前在编辑器下发现问题
-
-                s_Templates.Add(item.id, item);
-            }
-        }
-
-        // TODO 通过id，加载实例，池化策略：以id为准，同一id，数据一致，都是静态的数据
-        public static BehaviorTree CreateRuntimeTree(string treeId, EcsEntity actor)
-        {
-#if UNITY_EDITOR //&& false
-            var map = s_Templates_Editor;
-#else
-            var map = s_Templates;
-#endif
-            if (map.TryGetValue(treeId, out var tree))
-            {
-                return CreateRuntimeTree(tree, actor);
-            }
-            Log.ERROR("CreateRuntimeTree failed. treeId: " + treeId);
-            return null;
-        }
-
-        public static BehaviorTree CreateRuntimeTree(BehaviorTree template, EcsEntity actor)
-        {
-            var runtimeTree = template.Clone();
-            if (runtimeTree != null)
-            {
-#if UNITY_EDITOR
-                runtimeTree.name = runtimeTree.name.Replace("(Clone)", "(Runtime)");
-#endif
-            }
-            else
-            {
-                Debug.LogError("null tree set for.");
-            }
-
-            runtimeTree.actor = actor;
-            runtimeTree.Initialize();
-            return runtimeTree;
-        }
-
-        public static void ReleaseRuntimeTree(BehaviorTree runtimeTree)
-        {
-            // TODO pooling
-            runtimeTree.ResetData();
-        }
     }
-
-#if UNITY_EDITOR
-    [CreateAssetMenu(menuName = "Gameplay/" + nameof(BehaviorTree))]
-    partial class BehaviorTree : ScriptableObject
-    {
-        [SerializeField]
-        [HideInInspector]
-        internal Vector3 graphPosition;
-        [SerializeField]
-        [HideInInspector]
-        internal Vector3 graphScale = Vector3.one;
-
-        /*[HideInInspector]*/
-        //public List<BTNode> unusedNodes = new List<BTNode>();
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-
-            foreach (var node in nodes)
-            {
-                sb.AppendLine(node.ToString());
-            }
-
-            return sb.ToString();
-        }
-
-        internal void SetNodes_Editor(IEnumerable<BTNode> nodes)
-        {
-            this.nodes = nodes.ToArray();
-            for (int i = 0; i < this.nodes.Length; i++)
-            {
-                BTNode node = this.nodes[i];
-                node.Tree = this;
-                node.preOrder = i;
-            }
-        }
-
-        internal void OnValidate()
-        {
-            id = this.name;
-
-            if (nodes != null)
-            {
-                foreach (var node in nodes)
-                {
-                    node.OnValidate();
-                }
-            }
-        }
-    }
-#endif
 }

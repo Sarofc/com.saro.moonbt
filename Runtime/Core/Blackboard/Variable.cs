@@ -39,6 +39,8 @@ namespace Saro.BT
         public override void SetRawValue(object val) => value = (T)val;
 
         public override object GetRawValue() => value;
+
+        public override string ToString() => value.ToString();
     }
 
     [Serializable]
