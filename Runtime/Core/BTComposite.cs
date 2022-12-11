@@ -12,6 +12,7 @@ namespace Saro.BT
     {
         [JsonProperty]
         [SerializeField]
+        [HideInInspector]
         protected int[] m_Children;
 
         [JsonIgnore]
