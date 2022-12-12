@@ -218,9 +218,12 @@ namespace Saro.BT
             {
                 if (IsCanCompare(po.FieldType))
                 {
-                    if (!po.GetValue(obj1).Equals(po.GetValue(obj2)))
+                    var v1 = po.GetValue(obj1);
+                    var v2 = po.GetValue(obj2);
+                    //if (!po.GetValue(obj1).Equals(po.GetValue(obj2)))
+                    if (!Object.Equals(v1, v2))
                     {
-                        return $"field {po.Name} not equal";
+                        return $"field {po.Name} not equal. obj1: {v1}  obj2: {v2}";
                     }
                 }
                 else

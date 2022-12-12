@@ -18,7 +18,7 @@ namespace Saro.BT.Designer
             // 1. record position
             foreach (var node in TreeTraversal.PostOrder(root))
             {
-                node.nodePosition = node.GetPosition();
+                node.tempNodePosition = node.GetPosition();
             }
 
             // 2. position vertical
@@ -39,7 +39,7 @@ namespace Saro.BT.Designer
             // 5. apply position
             foreach (var node in TreeTraversal.PostOrder(root))
             {
-                node.SetPosition(node.nodePosition);
+                node.SetPosition(node.tempNodePosition);
             }
         }
 
@@ -49,8 +49,8 @@ namespace Saro.BT.Designer
 
             if (root.ParentNode != null)
             {
-                float nodeLeft = root.nodePosition.xMin;
-                float parentRight = root.ParentNode.nodePosition.xMax;
+                float nodeLeft = root.tempNodePosition.xMin;
+                float parentRight = root.ParentNode.tempNodePosition.xMax;
 
                 if (nodeLeft < parentRight)
                 {
@@ -58,21 +58,21 @@ namespace Saro.BT.Designer
                 }
             }
 
-            Vector2 oldPosition = root.nodePosition.center;
+            Vector2 oldPosition = root.tempNodePosition.center;
 
             Vector2 newPosition = dragPosition - offset;
             newPosition.x = Mathf.Clamp(newPosition.x, min, float.MaxValue);
 
-            root.nodePosition.center = newPosition;
+            root.tempNodePosition.center = newPosition;
 
             // 有其他node时，也一并移动
             if (otherNodes != null)
             {
-                Vector2 pan = root.nodePosition.center - oldPosition;
+                Vector2 pan = root.tempNodePosition.center - oldPosition;
 
                 foreach (BTGraphNode node in otherNodes)
                 {
-                    node.nodePosition.center = node.nodePosition.center + pan;
+                    node.tempNodePosition.center = node.tempNodePosition.center + pan;
                 }
             }
         }
@@ -85,8 +85,8 @@ namespace Saro.BT.Designer
 
             if (childCount > 1)
             {
-                Vector2 firstChildPos = node.GetChildAt(0).nodePosition.center;
-                Vector2 lastChildPos = node.GetChildAt(childCount - 1).nodePosition.center;
+                Vector2 firstChildPos = node.GetChildAt(0).tempNodePosition.center;
+                Vector2 lastChildPos = node.GetChildAt(childCount - 1).tempNodePosition.center;
                 float yMid = (firstChildPos.y + lastChildPos.y) / 2f;
 
                 yCoord = yMid;
@@ -98,7 +98,7 @@ namespace Saro.BT.Designer
             }
             else
             {
-                float leafHeight = node.nodePosition.size.y;
+                float leafHeight = node.tempNodePosition.size.y;
                 positioning.yLeaf += 0.5f * (positioning.lastLeafHeight + leafHeight) + FormatPositioning.yLeafSeparation;
 
                 yCoord = positioning.yLeaf;
@@ -106,7 +106,7 @@ namespace Saro.BT.Designer
                 positioning.lastLeafHeight = leafHeight;
             }
 
-            node.nodePosition.center = new Vector2(0, yCoord);
+            node.tempNodePosition.center = new Vector2(0, yCoord);
         }
 
         private static void PositionHorizontal(BTGraphNode node)
@@ -121,10 +121,10 @@ namespace Saro.BT.Designer
                   ? FormatPositioning.xLevelSeparation / 2f
                   : FormatPositioning.xLevelSeparation;
 
-                float x = parent.nodePosition.position.x + parent.nodePosition.size.x + xSeperation;
-                float y = node.nodePosition.position.y;
+                float x = parent.tempNodePosition.position.x + parent.tempNodePosition.size.x + xSeperation;
+                float y = node.tempNodePosition.position.y;
 
-                node.nodePosition.position = new Vector2(x, y);
+                node.tempNodePosition.position = new Vector2(x, y);
             }
         }
 

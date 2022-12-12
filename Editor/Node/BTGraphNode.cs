@@ -35,8 +35,9 @@ namespace Saro.BT.Designer
 
         /// <summary>
         /// UIE的 SetPosition 有延迟，不是立即生效的，这里做一个缓存
+        /// <code>目前仅用于 <see cref="BTGraphFormatter"/>，其他地方慎重使用，不保证节点位置正确</code>
         /// </summary>
-        internal Rect nodePosition;
+        internal Rect tempNodePosition;
 
         public BTGraphNode ParentNode
         {

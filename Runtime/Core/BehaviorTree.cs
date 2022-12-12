@@ -191,6 +191,9 @@ namespace Saro.BT
 #if UNITY_EDITOR
                 newNode.breakPoint = nodes[i].breakPoint;
                 newNode.comment = nodes[i].comment;
+                newNode.nodePosition = nodes[i].nodePosition;
+                newNode.comment = nodes[i].comment;
+                newNode.title = nodes[i].title;
 #endif
             }
             newTree.blackboardData = blackboardData;

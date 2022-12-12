@@ -427,11 +427,12 @@ namespace Saro.BT.Designer
 
             var nodes = copyData.nodes;
             var edges = copyData.edges;
+            var nodePosition = copyData.nodesPosition;
 
             foreach (var graphNode in graphNodes)
             {
                 nodes.Add(graphNode.NodeBehavior);
-
+                nodePosition.Add(graphNode.GetPosition());
                 var childCount = graphNode.ChildCount();
                 for (int k = 0; k < childCount; k++)
                 {
@@ -461,16 +462,18 @@ namespace Saro.BT.Designer
 
             var nodes = copyData.nodes;
             var edges = copyData.edges;
+            var nodesPosition = copyData.nodesPosition;
 
             if (nodes.Count > 0)
             {
                 ClearSelection();
 
                 var graphNodes = new List<BTGraphNode>(nodes.Count);
-                foreach (var node in nodes)
+                for (int i = 0; i < nodes.Count; i++)
                 {
+                    BTNode node = nodes[i];
                     var newNode = BTGraphNodeFactory.CreateGraphNode(node.GetType(), this, node);
-                    var nodePosition = node.nodePosition;
+                    var nodePosition = node.nodePosition = nodesPosition[i];
                     nodePosition.x += 200;
                     nodePosition.y += 200;
                     newNode.SetPosition(nodePosition);
