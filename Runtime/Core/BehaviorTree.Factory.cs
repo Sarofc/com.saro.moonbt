@@ -37,6 +37,7 @@ namespace Saro.BT
         [Conditional("UNITY_EDITOR")]
         private static void Load_Editor()
         {
+#if UNITY_EDITOR
             var finds = AssetDatabase.FindAssets($"t:Saro.BT.BehaviorTree", new[] { "Assets" });
 
             if (s_Templates_Editor == null)
@@ -53,6 +54,7 @@ namespace Saro.BT
                 else
                     Log.ERROR($"Editor BehaviorTree '{path}' is invalid");
             }
+#endif
         }
 
         /// <summary>
