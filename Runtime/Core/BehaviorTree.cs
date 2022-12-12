@@ -16,10 +16,10 @@ namespace Saro.BT
 {
     /*
      * TODO
-     * 
+     *
      * 1. json保存，目前json会剔除so相关的引用，debug时，有一些逻辑问题
      * 3. 清理整个树时，正在执行的action也要调用reset
-     * 
+     *
      */
 
     public partial class BehaviorTree
@@ -190,7 +190,6 @@ namespace Saro.BT
 
 #if UNITY_EDITOR
                 newNode.breakPoint = nodes[i].breakPoint;
-                newNode.comment = nodes[i].comment;
                 newNode.nodePosition = nodes[i].nodePosition;
                 newNode.comment = nodes[i].comment;
                 newNode.title = nodes[i].title;
