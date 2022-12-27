@@ -1,4 +1,10 @@
-﻿using System;
+﻿#if FIXED_POINT_MATH
+using Single = sfloat;
+#else
+using Single = System.Single;
+#endif
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -85,7 +91,7 @@ namespace Saro.BT
             {
                 SetValue(keyName, _int.GetValue());
             }
-            else if (value is Variable<float> _float)
+            else if (value is Variable<Single> _float)
             {
                 SetValue(keyName, _float.GetValue());
             }

@@ -1,4 +1,10 @@
-﻿using System.Collections.Generic;
+﻿#if FIXED_POINT_MATH
+using Single = sfloat;
+#else
+using Single = System.Single;
+#endif
+
+using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -120,7 +126,7 @@ namespace Saro.BT.Designer
             nodePosition = new Rect(100, 200, 0, 0);
         }
 
-        public override EStatus OnExecute(float deltaTime)
+        public override EStatus OnExecute(Single deltaTime)
         {
             throw new NotImplementedException();
         }

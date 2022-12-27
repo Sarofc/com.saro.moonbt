@@ -10,6 +10,12 @@ using Saro.Entities;
 using UnityEditor;
 #endif
 
+#if FIXED_POINT_MATH
+using Single = sfloat;
+#else
+using Single = System.Single;
+#endif
+
 using Saro.BT.Utility;
 
 namespace Saro.BT
@@ -100,7 +106,7 @@ namespace Saro.BT
             m_ActiveTimers.Clear();
         }
 
-        public void Tick(float deltaTime)
+        public void Tick(Single deltaTime)
         {
             if (IsTreeInitialized && m_MainIterator.IsRunning)
             {
@@ -123,7 +129,7 @@ namespace Saro.BT
 
         public void RemoveTimer(Timer timer) => m_ActiveTimers.Remove(timer);
 
-        private void TickTimers(float deltaTime)
+        private void TickTimers(Single deltaTime)
         {
             var timers = m_ActiveTimers.Data;
             var count = m_ActiveTimers.Data.Count;

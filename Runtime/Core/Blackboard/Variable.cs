@@ -1,4 +1,10 @@
-﻿using System;
+﻿#if FIXED_POINT_MATH
+using Single = sfloat;
+#else
+using Single = System.Single;
+#endif
+
+using System;
 using Saro.Entities;
 
 namespace Saro.BT
@@ -44,7 +50,7 @@ namespace Saro.BT
     }
 
     [Serializable]
-    public class Variable_Float : Variable<float> { }
+    public class Variable_Single : Variable<Single> { }
 
     [Serializable]
     public class Variable_Bool : Variable<bool> { }

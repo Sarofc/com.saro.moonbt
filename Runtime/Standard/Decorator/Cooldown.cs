@@ -2,6 +2,12 @@
 using System.Text;
 using Saro.BT.Utility;
 
+#if FIXED_POINT_MATH
+using Single = sfloat;
+#else
+using Single = System.Single;
+#endif
+
 namespace Saro.BT
 {
     // Cooldown只要没冷却，就会一直跑，但是观者者终止机制，只会在分支下才有效
@@ -62,7 +68,7 @@ namespace Saro.BT
             timer.OnTimeout = m_RemoveTimer;
         }
 
-        public override EStatus OnExecute(float deltaTime)
+        public override EStatus OnExecute(Single deltaTime)
         {
             if (!timer.IsDone) return EStatus.Failure;
 

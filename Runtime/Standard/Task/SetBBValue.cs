@@ -1,6 +1,12 @@
 ﻿using System.Text;
 using UnityEngine;
 
+#if FIXED_POINT_MATH
+using Single = sfloat;
+#else
+using Single = System.Single;
+#endif
+
 namespace Saro.BT
 {
     [BTNode("Blackboard_24x", "设置黑板值")]
@@ -21,7 +27,7 @@ namespace Saro.BT
             }
         }
 
-        public sealed override EStatus OnExecute(float deltaTime)
+        public sealed override EStatus OnExecute(Single deltaTime)
         {
             return EStatus.Success;
         }
@@ -81,7 +87,7 @@ namespace Saro.BT
 
     //public sealed class SetBBValue_Int : _SetBBValue<int> { }
 
-    //public sealed class SetBBValue_Float : _SetBBValue<float> { }
+    //public sealed class SetBBValue_Single : _SetBBValue<float> { }
 
     //public sealed class SetBBValue_Bool : _SetBBValue<bool> { }
 

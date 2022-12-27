@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using System.Text;
 using Saro.Core;
 using UnityEngine;
-using Cysharp.Threading.Tasks;
+using System.Threading.Tasks;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -35,7 +35,7 @@ namespace Saro.BT
             return configs;
         }
 
-        public async UniTask<List<T>> LoadAsync()
+        public async Task<List<T>> LoadAsync()
         {
 #if UNITY_EDITOR
             var json = await File.ReadAllTextAsync(m_FilePath);

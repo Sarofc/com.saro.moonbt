@@ -1,6 +1,12 @@
 ﻿using System;
 using Saro.Entities;
 
+#if FIXED_POINT_MATH
+using Single = sfloat;
+#else
+using Single = System.Single;
+#endif
+
 namespace Saro.BT
 {
     //public enum EBlackboardKeyOperation : byte
@@ -77,10 +83,10 @@ namespace Saro.BT
         }
     }
 
-    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceClassName: "BBKeyType_Float")]
-    public class BBKey_Float : BlackboardKeyType<float>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceClassName: "BBKey_Float")]
+    public class BBKey_Single : BlackboardKeyType<Single>
     {
-        public override bool TestOperation(float valueA, byte op, float valueB)
+        public override bool TestOperation(Single valueA, byte op, Single valueB)
         {
             return (EArithmeticKeyOperation)op switch
             {

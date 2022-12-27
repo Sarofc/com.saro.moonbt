@@ -1,6 +1,12 @@
 ﻿using System.Text;
 using Saro.SEditor;
 
+#if FIXED_POINT_MATH
+using Single = sfloat;
+#else
+using Single = System.Single;
+#endif
+
 namespace Saro.BT
 {
     public enum EAbortType
@@ -91,7 +97,7 @@ namespace Saro.BT
         /// </summary>
         protected virtual void OnObserverEnd() { }
 
-        public override EStatus OnExecute(float deltaTime)
+        public override EStatus OnExecute(Single deltaTime)
         {
             return Iterator.LastChildExitStatus.GetValueOrDefault(EStatus.Failure);
         }

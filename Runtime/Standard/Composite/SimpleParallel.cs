@@ -1,6 +1,12 @@
 ﻿using System;
 using System.Text;
 
+#if FIXED_POINT_MATH
+using Single = sfloat;
+#else
+using Single = System.Single;
+#endif
+
 namespace Saro.BT
 {
     [BTNode("Simple_Parallel_24x", "“简单并行”节点\n此节点有装饰器局部作用域\n允许主任务和后台任务一起执行，主任务不能包含Composite节点")]
@@ -96,7 +102,7 @@ namespace Saro.BT
             m_ChildrenStatus[childIndex] = status;
         }
 
-        public override EStatus OnExecute(float deltaTime)
+        public override EStatus OnExecute(Single deltaTime)
         {
             if (m_ChildrenStatus[0] == EStatus.Failure) return EStatus.Failure;
 

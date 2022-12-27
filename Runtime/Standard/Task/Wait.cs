@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using UnityEngine;
-
 using Saro.BT.Utility;
+
+#if FIXED_POINT_MATH
+using Single = sfloat;
+#else
+using Single = System.Single;
+#endif
 
 namespace Saro.BT
 {
@@ -25,7 +29,7 @@ namespace Saro.BT
             timer.Start();
         }
 
-        public override EStatus OnExecute(float deltaTime)
+        public override EStatus OnExecute(Single deltaTime)
         {
             timer.Tick(deltaTime);
 

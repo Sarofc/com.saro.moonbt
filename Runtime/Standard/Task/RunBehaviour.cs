@@ -1,14 +1,19 @@
 ﻿using System.Text;
 using UnityEngine;
-using UnityEngine.Scripting.APIUpdating;
+
+#if FIXED_POINT_MATH
+using Single = sfloat;
+#else
+using Single = System.Single;
+#endif
 
 namespace Saro.BT
 {
     /*
      * TODO
-     * 
+     *
      * 1. 看看有什么限制，例如 支不支持 装饰器打断
-     * 
+     *
      */
 
     [BTNode("Run_Behaviour_24x", "“运行”")]
@@ -82,7 +87,7 @@ namespace Saro.BT
             }
         }
 
-        public override EStatus OnExecute(float deltaTime)
+        public override EStatus OnExecute(Single deltaTime)
         {
             if (m_RunningSubTree != null)
             {

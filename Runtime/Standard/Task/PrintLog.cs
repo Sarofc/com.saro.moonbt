@@ -2,6 +2,12 @@
 using UnityEngine;
 using UnityEngine.Scripting.APIUpdating;
 
+#if FIXED_POINT_MATH
+using Single = sfloat;
+#else
+using Single = System.Single;
+#endif
+
 namespace Saro.BT
 {
     [MovedFrom(true, sourceClassName: "Print")]
@@ -16,7 +22,7 @@ namespace Saro.BT
         [Tooltip("the type of message to display.")]
         public ELogType logType = ELogType.Info;
 
-        public override EStatus OnExecute(float deltaTime)
+        public override EStatus OnExecute(Single deltaTime)
         {
             switch (logType)
             {

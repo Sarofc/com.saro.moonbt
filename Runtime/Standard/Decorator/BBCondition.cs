@@ -3,6 +3,12 @@ using System.Text;
 using Saro.Entities;
 using Saro.SEditor;
 
+#if FIXED_POINT_MATH
+using Single = sfloat;
+#else
+using Single = System.Single;
+#endif
+
 namespace Saro.BT
 {
     [BTNode("Blackboard_24x", "‘黑板条件’节点\n节点将判断黑板键的值与给定值之间的关系，根据结果（可以是大于、小于、等于，等等）阻止或允许节点的执行。")]
@@ -14,9 +20,9 @@ namespace Saro.BT
         public byte keyOperation;
 
 #if UNITY_EDITOR
-        [ShowIf(nameof(GetOpType), typeof(BBKey_Float))]
+        [ShowIf(nameof(GetOpType), typeof(BBKey_Single))]
 #endif
-        public float compareFloat;
+        public Single compareFloat;
 #if UNITY_EDITOR
         [ShowIf(nameof(GetOpType), typeof(BBKey_Int))]
 #endif
@@ -67,7 +73,7 @@ namespace Saro.BT
             return keyType switch
             {
                 BBKey_Bool bbkey => bbkey.TestOperation(Blackboard.GetValue<bool>(keyIndex), keyOperation),
-                BBKey_Float bbkey => bbkey.TestOperation(Blackboard.GetValue<float>(keyIndex), keyOperation, compareFloat),
+                BBKey_Single bbkey => bbkey.TestOperation(Blackboard.GetValue<Single>(keyIndex), keyOperation, compareFloat),
                 BBKey_Int bbkey => bbkey.TestOperation(Blackboard.GetValue<int>(keyIndex), keyOperation, compareInt),
                 BBKey_String bbkey => bbkey.TestOperation(Blackboard.GetValue<string>(keyIndex), keyOperation, compareText),
                 BBKey_Object bbkey => bbkey.TestOperation(Blackboard.GetValue<object>(keyIndex), keyOperation),
@@ -124,7 +130,7 @@ namespace Saro.BT
                         builder.Append(keyOp);
                     }
                     break;
-                case BBKey_Float _flaot:
+                case BBKey_Single _flaot:
                     {
                         var keyOp = (EArithmeticKeyOperation)keyOperation;
                         builder.Append(" ");
@@ -167,7 +173,7 @@ namespace Saro.BT
                 return keyType switch
                 {
                     BBKey_Bool bbkey => typeof(BBKey_Bool),
-                    BBKey_Float bbkey => typeof(BBKey_Float),
+                    BBKey_Single bbkey => typeof(BBKey_Single),
                     BBKey_Int bbkey => typeof(BBKey_Int),
                     BBKey_String bbkey => typeof(BBKey_String),
                     BBKey_Object bbkey => typeof(BBKey_Object),

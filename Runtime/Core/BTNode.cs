@@ -5,6 +5,12 @@ using Saro.Entities;
 using Saro.SEditor;
 using UnityEngine;
 
+#if FIXED_POINT_MATH
+using Single = sfloat;
+#else
+using Single = System.Single;
+#endif
+
 namespace Saro.BT
 {
     [Serializable]
@@ -58,7 +64,7 @@ namespace Saro.BT
         /// 执行节点
         /// </summary>
         /// <returns></returns>
-        public abstract EStatus OnExecute(float deltaTime);
+        public abstract EStatus OnExecute(Single deltaTime);
 
         /// <summary>
         /// 此节点开始执行时调用
@@ -117,7 +123,7 @@ namespace Saro.BT
 
         public virtual void Description(StringBuilder builder) { }
 
-        // 用 partial 会导致编辑器面板 字段顺序 紊乱 
+        // 用 partial 会导致编辑器面板 字段顺序 紊乱
 #if UNITY_EDITOR
         internal enum EStatusEditor
         {

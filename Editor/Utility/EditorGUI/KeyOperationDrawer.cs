@@ -36,7 +36,7 @@ namespace Saro.BT.Designer
                 BBKey_Object => (EBasicKeyOperation)keyOperation,
                 BBKey_EcsEntity => (EBasicKeyOperation)keyOperation,
                 BBKey_Vector3 => (EBasicKeyOperation)keyOperation,
-                BBKey_Float => (EArithmeticKeyOperation)keyOperation,
+                BBKey_Single => (EArithmeticKeyOperation)keyOperation,
                 BBKey_Int => (EArithmeticKeyOperation)keyOperation,
                 BBKey_String => (ETextKeyOperation)keyOperation,
                 _ => null,

@@ -1,5 +1,12 @@
-﻿using System;
+﻿#if FIXED_POINT_MATH
+using Single = sfloat;
+#else
+using Single = System.Single;
+#endif
+
+using System;
 using Newtonsoft.Json;
+using Saro.Utility;
 using UnityEngine;
 
 namespace Saro.BT.Utility
@@ -8,14 +15,14 @@ namespace Saro.BT.Utility
     public class Timer
     {
         [Min(0)]
-        public float interval = 1f;
+        public Single interval = 1f;
 
         [Tooltip("Adds a random range value to the interval between [-Deviation, +Deviation]")]
         [Min(0)]
-        public float deviation = 0.1f;
+        public Single deviation = 0.1f;
 
         [JsonIgnore]
-        public float TimeLeft { get; private set; } = 0f;
+        public Single TimeLeft { get; private set; } = 0f;
 
         [JsonIgnore]
         public bool AutoRestart { get; set; } = false;
@@ -44,11 +51,12 @@ namespace Saro.BT.Utility
 
             if (deviation > 0.033f)
             {
-                TimeLeft += UnityEngine.Random.Range(-deviation, deviation);
+                TimeLeft += GRandom.NextFloat(-deviation, deviation);
+                //TimeLeft += UnityEngine.Random.Range(-deviation, deviation);
             }
         }
 
-        public void Tick(float delta)
+        public void Tick(Single delta)
         {
             if (TimeLeft > 0f)
             {
@@ -65,7 +73,7 @@ namespace Saro.BT.Utility
         }
 
         /// <summary>
-        /// for 
+        /// for
         /// <see cref="BTRunTimeValueAttribute"/>
         /// </summary>
         /// <returns></returns>

@@ -1,5 +1,11 @@
 ﻿using System.Text;
 
+#if FIXED_POINT_MATH
+using Single = sfloat;
+#else
+using Single = System.Single;
+#endif
+
 namespace Saro.BT
 {
     [BTNode("Force_Success_24x")]
@@ -13,7 +19,7 @@ namespace Saro.BT
         {
         }
 
-        public override EStatus OnExecute(float deltaTime)
+        public override EStatus OnExecute(Single deltaTime)
         {
             return EStatus.Success;
         }

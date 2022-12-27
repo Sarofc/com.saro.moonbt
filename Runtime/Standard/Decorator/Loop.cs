@@ -1,6 +1,12 @@
 ﻿using System.Text;
 using UnityEngine;
 
+#if FIXED_POINT_MATH
+using Single = sfloat;
+#else
+using Single = System.Single;
+#endif
+
 namespace Saro.BT
 {
     [BTNode("Loop_24x", "“循环”装饰节点\n自身终止条件是 计数器是否耗尽。\n-1代表无限循环")]
@@ -21,7 +27,7 @@ namespace Saro.BT
         {
         }
 
-        public override EStatus OnExecute(float deltaTime)
+        public override EStatus OnExecute(Single deltaTime)
         {
             if (loopCount == -1)
             {

@@ -6,6 +6,12 @@ using System;
 using System.Collections.Generic;
 using Saro.BT.Utility;
 
+#if FIXED_POINT_MATH
+using Single = sfloat;
+#else
+using Single = System.Single;
+#endif
+
 namespace Saro.BT
 {
     public sealed class BTBehaviorIterator
@@ -35,7 +41,7 @@ namespace Saro.BT
             m_RequestedTraversals = new Queue<int>(maxTraversalLen);
         }
 
-        public void Tick(float deltaTime)
+        public void Tick(Single deltaTime)
         {
             CallOnEnterOnQueuedNodes();
 

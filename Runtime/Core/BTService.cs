@@ -3,17 +3,23 @@
 using Saro.BT.Utility;
 using UnityEngine;
 
+#if FIXED_POINT_MATH
+using Single = sfloat;
+#else
+using Single = System.Single;
+#endif
+
 namespace Saro.BT
 {
-    /* 
+    /*
      * TODO
-     * 
+     *
      * ue的规则如下：
      * 1. composite时，service在composite后执行
      * 2. task时，service在task之前执行
-     * 
+     *
      * 此行为树的service都是在之前执行，不管composite、还是task
-     * 
+     *
      */
     [BTNode("Service_24x", "“服务”节点\n当子树在运行时，就会间隔调用 ServiceTick，用于代替 传统并行节点。")]
     public abstract class BTService : BTAuxiliary
@@ -54,7 +60,7 @@ namespace Saro.BT
             Tree.RemoveTimer(timer);
         }
 
-        public sealed override EStatus OnExecute(float deltaTime)
+        public sealed override EStatus OnExecute(Single deltaTime)
         {
             return Iterator.LastChildExitStatus.GetValueOrDefault(EStatus.Failure);
         }

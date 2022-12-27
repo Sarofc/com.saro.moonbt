@@ -25,7 +25,7 @@ namespace Saro.BT.Tests
             return ReturnStatus;
         }
 
-        public override float UtilityValue()
+        public override Single UtilityValue()
         {
             return Utility.GetValueOrDefault(base.UtilityValue());
         }
@@ -35,7 +35,7 @@ namespace Saro.BT.Tests
             Blackboard.Get<List<int>>(kHistoryKey).Add(PreOrderIndex);
         }
 
-        public TestNode WithUtility(float utility)
+        public TestNode WithUtility(Single utility)
         {
             Utility = utility;
             return this;
