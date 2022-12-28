@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.UnityConverters;
-using Saro.Utility;
 
 namespace Saro.BT
 {
@@ -16,7 +12,7 @@ namespace Saro.BT
             NullValueHandling = NullValueHandling.Ignore,
             DefaultValueHandling = DefaultValueHandling.Ignore,
             //Formatting = Formatting.Indented,
-            Converters = TypeUtility.GetSubClassTypesAllAssemblies(typeof(PartialConverter)).Select(t => Activator.CreateInstance(t) as JsonConverter).ToArray(),
+            Converters = IAutoJsonConverter.GetJsonConverters(),
         };
 
         public static string ToJson(object obj)
