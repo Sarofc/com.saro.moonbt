@@ -15,20 +15,24 @@ namespace Saro.BT.Utility
     public class Timer
     {
         [Min(0)]
-        public Single interval = 1f;
+        public Single interval = 1;
 
         [Tooltip("Adds a random range value to the interval between [-Deviation, +Deviation]")]
         [Min(0)]
+#if FIXED_POINT_MATH
+        public Single deviation = 1 / (Single)10;
+#else
         public Single deviation = 0.1f;
+#endif
 
         [JsonIgnore]
-        public Single TimeLeft { get; private set; } = 0f;
+        public Single TimeLeft { get; private set; } = 0;
 
         [JsonIgnore]
         public bool AutoRestart { get; set; } = false;
 
         [JsonIgnore]
-        public bool IsDone => TimeLeft <= 0f;
+        public bool IsDone => TimeLeft <= 0;
 
         [JsonIgnore]
         public bool IsRunning => !IsDone;
@@ -48,8 +52,7 @@ namespace Saro.BT.Utility
         public void Start()
         {
             TimeLeft = interval;
-
-            if (deviation > 0.033f)
+            if (deviation > Single.Epsilon)
             {
                 TimeLeft += GRandom.NextFloat(-deviation, deviation);
                 //TimeLeft += UnityEngine.Random.Range(-deviation, deviation);
@@ -58,7 +61,7 @@ namespace Saro.BT.Utility
 
         public void Tick(Single delta)
         {
-            if (TimeLeft > 0f)
+            if (TimeLeft > 0)
             {
                 TimeLeft -= delta;
                 if (IsDone)
@@ -81,7 +84,7 @@ namespace Saro.BT.Utility
 
         public string GetIntervalInfo()
         {
-            if (deviation > 0.033f)
+            if (deviation > Single.Epsilon)
                 return $"{interval}±{deviation}";
             else
                 return interval.ToString();

@@ -10,12 +10,14 @@ namespace Saro.BT.Designer
         private Vector2 m_DrawScroll;
         private float m_LastScrollPosY;
 
-        [MenuItem("Gameplay/BTExecuteLogConsole")]
-        static void Init()
-        {
-            var window = GetWindow<BTExecuteLogConsole>();
-            window.titleContent = new GUIContent("BTExecuteLogConsole");
-        }
+        // TODO BUG 运行中，打开此界面，编辑器卡住
+
+        //[MenuItem("Gameplay/BTExecuteLogConsole")]
+        //static void Init()
+        //{
+        //    var window = GetWindow<BTExecuteLogConsole>();
+        //    window.titleContent = new GUIContent("BTExecuteLogConsole");
+        //}
 
         private static GUIStyle s_FontStyle;
         private static GUIStyle FontStyle
