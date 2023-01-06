@@ -2,33 +2,30 @@
 #define DEBUG_MOON_BT // debug
 #endif
 
-using System;
-using System.Collections.Generic;
-using Saro.BT.Utility;
-
 #if FIXED_POINT_MATH
 using Single = sfloat;
 #else
 using Single = System.Single;
 #endif
 
+using System;
+using System.Collections.Generic;
+using Saro.BT.Utility;
+
 namespace Saro.BT
 {
-    public sealed class BTBehaviorIterator
+    public sealed partial class BTBehaviorIterator
     {
         private readonly FixedSizeStack<int> m_Traversal;
         private readonly Queue<int> m_RequestedTraversals;
+        public BTNode.EStatus? LastChildExitStatus { get; private set; }
+        public BTNode.EStatus LastExecutedStatus { get; private set; }
 
         private readonly BehaviorTree m_Tree;
-
         public event Action OnCompleted;
 
         public bool IsRunning => m_Traversal.Count != 0;
-
         public int CurrentIndex => m_Traversal.Count == 0 ? BTNode.k_InvalidPreOrder : m_Traversal.Peek();
-
-        public BTNode.EStatus? LastChildExitStatus { get; private set; }
-        public BTNode.EStatus LastExecutedStatus { get; private set; }
 
         //public int FirstInTraversal => m_Traversal.GetValueAt(0);
 
@@ -214,7 +211,7 @@ namespace Saro.BT
         private static void INFO(string msg)
         {
 #if DEBUG_MOON_BT
-            s_LogCache.Add($"{DateTime.Now.ToLongTimeString()}   {msg}\n" );
+            s_LogCache.Add($"{DateTime.Now.ToLongTimeString()}   {msg}\n");
 #endif
 
             //UnityEngine.Debug.Log(msg);

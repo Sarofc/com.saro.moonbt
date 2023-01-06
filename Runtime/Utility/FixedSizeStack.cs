@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace Saro.BT.Utility
 {
-    public class FixedSizeStack<T> : IEnumerable<T>, IEnumerable
+    internal class FixedSizeStack<T> : IEnumerable<T>, IEnumerable
     {
-        private readonly T[] m_Container;
+        private T[] m_InternalArray;
 
         public int Capacity { get; private set; }
         public int Count { get; private set; }
@@ -15,29 +15,27 @@ namespace Saro.BT.Utility
         {
             Count = 0;
             Capacity = capacity;
-            this.m_Container = new T[capacity];
+            m_InternalArray = new T[capacity];
         }
 
         public void Clear()
         {
             Count = 0;
-            for (int i = 0; i < m_Container.Length; i++)
+            for (int i = 0; i < m_InternalArray.Length; i++)
             {
-                m_Container[i] = default;
+                m_InternalArray[i] = default;
             }
         }
 
         public void FastClear() => Count = 0;
 
-        public T Peek() => m_Container[Count - 1];
+        public T Peek() => m_InternalArray[Count - 1];
 
-        public T Pop() => m_Container[--Count];
+        public T Pop() => m_InternalArray[--Count];
 
-        public void Push(T value) => m_Container[Count++] = value;
+        public void Push(T value) => m_InternalArray[Count++] = value;
 
-        public T this[int index] => m_Container[index];
-
-        public T GetValueAt(int index) => m_Container[index];
+        public T GetValueAt(int index) => m_InternalArray[index];
 
         public Enumerator GetEnumerator() => new(this);
 
@@ -45,11 +43,11 @@ namespace Saro.BT.Utility
 
         IEnumerator<T> IEnumerable<T>.GetEnumerator() => GetEnumerator();
 
-        public struct Enumerator : IEnumerator<T>, IEnumerator
+        public struct Enumerator : IEnumerator<T>, IEnumerator // TODO 测试一下
         {
-            public T Current => m_Array[m_Position];
+            public T Current => m_Array.GetValueAt(m_Position);
 
-            object IEnumerator.Current => m_Array[m_Position];
+            object IEnumerator.Current => Current;
 
             readonly FixedSizeStack<T> m_Array;
             private int m_Position;
@@ -57,15 +55,15 @@ namespace Saro.BT.Utility
             internal Enumerator(FixedSizeStack<T> array)
             {
                 if (array == null) throw new Exception();
-                this.m_Array = array;
-                m_Position = -1;
+                m_Array = array;
+                m_Position = array.Count;
             }
 
-            void IDisposable.Dispose() { }
+            public void Dispose() { }
 
-            public bool MoveNext() => ++m_Position < m_Array.Count;
+            public bool MoveNext() => --m_Position >= 0;
 
-            void IEnumerator.Reset() => m_Position = -1;
+            public void Reset() => m_Position = m_Array.Count;
         }
     }
 }

@@ -26,9 +26,6 @@ namespace Saro.BT.Utility
 #endif
 
         [JsonIgnore]
-        public Single TimeLeft { get; private set; } = 0;
-
-        [JsonIgnore]
         public bool AutoRestart { get; set; } = false;
 
         [JsonIgnore]
@@ -39,6 +36,9 @@ namespace Saro.BT.Utility
 
         [JsonIgnore]
         public Action OnTimeout; // TODO 使用的地方，缓存action
+
+        [JsonIgnore]
+        public Single TimeLeft { get; private set; } = 0;
 
         public Timer() { }
 

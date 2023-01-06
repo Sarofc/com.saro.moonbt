@@ -1,22 +1,21 @@
-﻿using System;
+﻿#if FIXED_POINT_MATH
+using Single = sfloat;
+#else
+using Single = System.Single;
+#endif
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Newtonsoft.Json;
 using UnityEngine.Serialization;
 using Saro.Entities;
+using Saro.BT.Utility;
 
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
-
-#if FIXED_POINT_MATH
-using Single = sfloat;
-#else
-using Single = System.Single;
-#endif
-
-using Saro.BT.Utility;
 
 namespace Saro.BT
 {
@@ -33,13 +32,6 @@ namespace Saro.BT
         private BTBehaviorIterator m_MainIterator;
 
         private UpdateList<Timer> m_ActiveTimers;
-
-        [JsonIgnore]
-        public int ActiveTimerCount => m_ActiveTimers.Data.Count;
-
-        [JsonIgnore]
-        public bool IsTreeInitialized { get; private set; }
-
         [JsonIgnore]
         public BTBlackboard Blackboard { get; private set; }
 
@@ -47,7 +39,13 @@ namespace Saro.BT
         public EcsEntity actor;
 
         [JsonIgnore]
+        public bool IsTreeInitialized { get; private set; }
+
+        [JsonIgnore]
         public int Height { get; internal set; }
+
+        [JsonIgnore]
+        public int ActiveTimerCount => m_ActiveTimers.Data.Count;
 
         [JsonIgnore]
         public BTNode Root => nodes.Length == 0 ? null : nodes[0];

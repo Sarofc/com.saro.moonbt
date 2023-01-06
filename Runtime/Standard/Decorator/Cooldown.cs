@@ -1,12 +1,12 @@
-﻿using System;
-using System.Text;
-using Saro.BT.Utility;
-
-#if FIXED_POINT_MATH
+﻿#if FIXED_POINT_MATH
 using Single = sfloat;
 #else
 using Single = System.Single;
 #endif
+
+using System;
+using System.Text;
+using Saro.BT.Utility;
 
 namespace Saro.BT
 {

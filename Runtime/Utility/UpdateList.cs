@@ -3,8 +3,7 @@ using System.Collections.Generic;
 
 namespace Saro.BT
 {
-
-    public class UpdateList<T>
+    internal partial class UpdateList<T>
     {
         private readonly List<T> m_Data = new();
         private readonly List<T> m_AddQueue = new();

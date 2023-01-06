@@ -1,15 +1,15 @@
-﻿using System;
+﻿#if FIXED_POINT_MATH
+using Single = sfloat;
+#else
+using Single = System.Single;
+#endif
+
+using System;
 using System.Text;
 using Newtonsoft.Json;
 using Saro.Entities;
 using Saro.SEditor;
 using UnityEngine;
-
-#if FIXED_POINT_MATH
-using Single = sfloat;
-#else
-using Single = System.Single;
-#endif
 
 namespace Saro.BT
 {
@@ -18,9 +18,9 @@ namespace Saro.BT
     {
         public enum EStatus : byte
         {
-            Success,
-            Failure,
-            Running
+            Success = 1,
+            Failure = 2,
+            Running = 3
         }
 
         public const int k_InvalidPreOrder = -1;
