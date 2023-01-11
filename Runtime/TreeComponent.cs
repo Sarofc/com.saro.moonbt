@@ -1,4 +1,12 @@
-﻿using System;
+﻿#if FIXED_POINT_MATH
+using ME.ECS.Mathematics;
+using Single = sfloat;
+#else
+using Unity.Mathematics;
+using Single = System.Single;
+#endif
+
+using System;
 using System.Collections.Generic;
 using Saro.Entities;
 using UnityEngine;
@@ -44,7 +52,7 @@ namespace Saro.BT
         public void Tick()
         {
             if (m_RuntimeTree != null)
-                m_RuntimeTree.Tick(Time.deltaTime);
+                m_RuntimeTree.Tick((Single)Time.deltaTime);
         }
 
         private void FixedUpdate()
