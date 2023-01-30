@@ -133,7 +133,7 @@ namespace Saro.BT
                 }
             }
 
-            return ref MemoryUtility.NullRef<T>();
+            return ref NativeUtility.NullRef<T>();
         }
 
         public void SetValue<T>(string keyName, T value) where T : IEquatable<T>
@@ -146,7 +146,7 @@ namespace Saro.BT
         {
             ref var refValue = ref GetValue<T>(index);
 
-            if (MemoryUtility.IsNullRef(ref refValue))
+            if (NativeUtility.IsNullRef(ref refValue))
             {
                 Log.ERROR("[Blackboard] null ref. index: " + index);
                 return;
@@ -169,7 +169,7 @@ namespace Saro.BT
         {
             ref var refValue = ref GetValue<object>(index);
 
-            if (MemoryUtility.IsNullRef(ref refValue))
+            if (NativeUtility.IsNullRef(ref refValue))
             {
                 Log.ERROR("[Blackboard] null ref. index: " + index);
                 return;
