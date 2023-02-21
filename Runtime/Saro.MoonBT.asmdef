@@ -4,8 +4,8 @@
     "references": [
         "Saro.MGF",
         "Saro.Entities",
-        "ME.ECS.FPMath",
-        "UniTask"
+        "UniTask",
+        "Saro.FPMath"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

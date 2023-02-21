@@ -1,5 +1,5 @@
 ﻿#if FIXED_POINT_MATH
-using Single = sfloat;
+using Single = Saro.FPMath.sfloat;
 #else
 using Single = System.Single;
 #endif
@@ -18,9 +18,9 @@ namespace Saro.BT
     {
         public enum EStatus : byte
         {
-            Success = 1,
-            Failure = 2,
-            Running = 3
+            Success = 0,
+            Failure = 1,
+            Running = 2
         }
 
         public const int k_InvalidPreOrder = -1;
@@ -127,7 +127,12 @@ namespace Saro.BT
 #if UNITY_EDITOR
         internal enum EStatusEditor
         {
-            Success, Failure, Running, None, Aborted, Interruption
+            Success = EStatus.Success, 
+            Failure = EStatus.Failure, 
+            Running = EStatus.Running, 
+            None, 
+            Aborted, 
+            Interruption
         }
 
         [HideInInspector]

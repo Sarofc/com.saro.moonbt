@@ -56,7 +56,7 @@ namespace Saro.BT.Designer
 
             if (graphView.EdgeConnectorListener != null)
             {
-                ChildPort.AddManipulator(new EdgeConnector<Edge>(graphView.EdgeConnectorListener));
+                ChildPort.AddManipulator(new EdgeConnector<FlowingEdge>(graphView.EdgeConnectorListener));
             }
         }
 

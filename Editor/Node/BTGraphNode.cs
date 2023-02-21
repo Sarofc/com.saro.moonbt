@@ -212,16 +212,21 @@ namespace Saro.BT.Designer
 
         protected virtual void AddParent()
         {
-            ParentPort = Port.Create<Edge>(Orientation.Horizontal, Direction.Input, Port.Capacity.Single, typeof(Port));
+            ParentPort = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Single, typeof(Port));
             ParentPort.portName = "Parent";
             inputContainer.Add(ParentPort);
         }
 
         protected virtual Port CreateChildPort()
         {
-            var port = Port.Create<Edge>(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(Port));
+            var port = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(Port));
             port.portName = "Child";
             return port;
+        }
+
+        public override Port InstantiatePort(Orientation orientation, Direction direction, Port.Capacity capacity, Type type)
+        {
+            return Port.Create<FlowingEdge>(orientation, direction, capacity, type);
         }
 
         public override void OnSelected()
@@ -292,6 +297,20 @@ namespace Saro.BT.Designer
                 case BTNode.EStatusEditor.Interruption:
                     SetBorderColor(Color.blue);
                     break;
+            }
+
+            SetFlowEdge(status == BTNode.EStatusEditor.Running);
+        }
+
+        protected virtual void SetFlowEdge(bool flow)
+        {
+            if (!ParentPort.connected) return;
+            foreach (var item in ParentPort.connections)
+            {
+                if(item is FlowingEdge flowingEdge)
+                {
+                    flowingEdge.enableFlow = flow;
+                }
             }
         }
 

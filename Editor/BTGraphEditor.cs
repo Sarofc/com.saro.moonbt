@@ -68,6 +68,8 @@ namespace Saro.BT.Designer
             {
                 m_NodeInspector.MarkDirtyRepaint();
             }
+
+            m_BTGraphView.Update();
         }
 
         private void OnDestroy()
@@ -233,9 +235,7 @@ namespace Saro.BT.Designer
             // TODO playmode 切换时，不能自动选择到 上一个资源
             // OnPlayModeStateChanged / Selection.selectionChanged 需要延迟一帧
             while (m_BTGraphView == null)
-            {
-                await Task.Yield(); // stack overflow?
-            }
+                await Task.Yield(); // stack overflow? 改为携程吧
 
             BehaviorTree tree = null;
 

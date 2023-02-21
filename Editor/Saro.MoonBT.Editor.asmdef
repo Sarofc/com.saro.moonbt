@@ -5,7 +5,7 @@
         "Saro.MoonBT",
         "Saro.MGF",
         "Saro.MGF.Editor",
-        "ME.ECS.FPMath"
+        "Saro.FPMath"
     ],
     "includePlatforms": [
         "Editor"

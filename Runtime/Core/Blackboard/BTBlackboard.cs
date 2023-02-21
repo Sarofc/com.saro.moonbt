@@ -1,5 +1,5 @@
 ﻿#if FIXED_POINT_MATH
-using Single = sfloat;
+using Single = Saro.FPMath.sfloat;
 #else
 using Single = System.Single;
 #endif

@@ -1,5 +1,5 @@
 ﻿#if FIXED_POINT_MATH
-using Single = sfloat;
+using Single = Saro.FPMath.sfloat;
 #else
 using Single = System.Single;
 #endif
@@ -45,7 +45,7 @@ namespace Saro.BT.Designer
 
             if (graphView.EdgeConnectorListener != null)
             {
-                ChildPort.AddManipulator(new EdgeConnector<Edge>(graphView.EdgeConnectorListener));
+                ChildPort.AddManipulator(new EdgeConnector<FlowingEdge>(graphView.EdgeConnectorListener));
             }
         }
 

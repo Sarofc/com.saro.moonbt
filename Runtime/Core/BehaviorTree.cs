@@ -1,5 +1,5 @@
 ﻿#if FIXED_POINT_MATH
-using Single = sfloat;
+using Single = Saro.FPMath.sfloat;
 #else
 using Single = System.Single;
 #endif
@@ -22,7 +22,6 @@ namespace Saro.BT
     /*
      * TODO
      *
-     * 1. json保存，目前json会剔除so相关的引用，debug时，有一些逻辑问题
      * 3. 清理整个树时，正在执行的action也要调用reset
      *
      */
@@ -53,6 +52,7 @@ namespace Saro.BT
         #region Serialization
 
         public string id;
+        public int uid;
 
         [FormerlySerializedAs("Nodes")]
         [SerializeReference]

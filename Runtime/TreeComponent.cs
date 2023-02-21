@@ -1,6 +1,6 @@
 ﻿#if FIXED_POINT_MATH
-using ME.ECS.Mathematics;
-using Single = sfloat;
+using Saro.FPMath;
+using Single = Saro.FPMath.sfloat;
 #else
 using Unity.Mathematics;
 using Single = System.Single;

@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Saro.Utility;
 using UnityEngine;
 
 namespace Saro.BT
@@ -46,6 +47,7 @@ namespace Saro.BT
         internal void OnValidate()
         {
             id = this.name;
+            uid = BTUtility.StringToHash(this.name);
 
             if (nodes != null)
             {

@@ -311,7 +311,7 @@ namespace Saro.BT.Designer
 
         public static Edge ConnectPorts(Port output, Port input)
         {
-            var tempEdge = new Edge
+            var tempEdge = new FlowingEdge
             {
                 output = output,
                 input = input
@@ -325,6 +325,25 @@ namespace Saro.BT.Designer
         {
             edge.input.Disconnect(edge);
             edge.output.Disconnect(edge);
+        }
+
+        public void Update()
+        {
+            if (Application.isPlaying)
+            {
+                UpdateFlow();
+            }
+        }
+
+        private void UpdateFlow()
+        {
+            foreach (var item in edges)
+            {
+                if (item is FlowingEdge flowingEdge)
+                {
+                    flowingEdge.UpdateFlow();
+                }
+            }
         }
 
         #region Nodes

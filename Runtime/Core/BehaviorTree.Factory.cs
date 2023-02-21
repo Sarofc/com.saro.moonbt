@@ -10,14 +10,14 @@ using UnityEditor;
 
 namespace Saro.BT
 {
-    partial class BehaviorTree
+    partial class BehaviorTree // BTManager
     {
-        private static Dictionary<string, BehaviorTree> s_Templates;
+        private static Dictionary<int, BehaviorTree> s_Templates;
 #if UNITY_EDITOR
-        private static Dictionary<string, BehaviorTree> s_Templates_Editor;
+        private static Dictionary<int, BehaviorTree> s_Templates_Editor;
 #endif
 
-        private readonly static Dictionary<string, ObjectPool<BehaviorTree>> s_CachedRuntimeTrees = new();
+        private readonly static Dictionary<int, ObjectPool<BehaviorTree>> s_CachedRuntimeTrees = new();
 
         public bool Poolable { get; private set; }
 
@@ -31,7 +31,7 @@ namespace Saro.BT
                 s_Templates.Clear();
 
             foreach (var item in list)
-                s_Templates.Add(item.id, item);
+                s_Templates.Add(item.uid, item);
         }
 
         [Conditional("UNITY_EDITOR")]
@@ -50,7 +50,7 @@ namespace Saro.BT
                 var path = AssetDatabase.GUIDToAssetPath(item);
                 var tree = AssetDatabase.LoadAssetAtPath<BehaviorTree>(path);
                 if (tree)
-                    s_Templates_Editor.Add(tree.name, tree);
+                    s_Templates_Editor.Add(BTUtility.StringToHash(tree.name), tree);
                 else
                     Log.ERROR($"Editor BehaviorTree '{path}' is invalid");
             }
@@ -63,7 +63,19 @@ namespace Saro.BT
         /// <param name="treeId"></param>
         /// <param name="actor"></param>
         /// <returns></returns>
-        public static BehaviorTree CetOrCreateRuntimeTree(string treeId, EcsEntity actor)
+        public static BehaviorTree CetOrCreateRuntimeTree(string treeName, EcsEntity actor)
+        {
+            var treeId = BTUtility.StringToHash(treeName);
+            return CetOrCreateRuntimeTree(treeId, actor);
+        }
+
+        /// <summary>
+        /// 通过 [id] 获取 或者 创建 运行时对象，内部池化
+        /// </summary>
+        /// <param name="treeId"></param>
+        /// <param name="actor"></param>
+        /// <returns></returns>
+        public static BehaviorTree CetOrCreateRuntimeTree(int treeId, EcsEntity actor)
         {
             if (!s_CachedRuntimeTrees.TryGetValue(treeId, out var pool))
             {
@@ -93,13 +105,14 @@ namespace Saro.BT
             return runtimeTree;
         }
 
+
         /// <summary>
         /// 通过 [id] 生成一个新的运行时对象
         /// </summary>
         /// <param name="treeId"></param>
         /// <param name="actor"></param>
         /// <returns></returns>
-        public static BehaviorTree CreateRuntimeTree(string treeId, EcsEntity actor)
+        public static BehaviorTree CreateRuntimeTree(int treeId, EcsEntity actor)
         {
             if (TryGetTemplateTree(treeId, out var template))
                 return CreateRuntimeTree(template, actor);
@@ -126,7 +139,7 @@ namespace Saro.BT
         /// <param name="treeId"></param>
         /// <param name="template"></param>
         /// <returns></returns>
-        public static bool TryGetTemplateTree(string treeId, out BehaviorTree template)
+        public static bool TryGetTemplateTree(int treeId, out BehaviorTree template)
         {
 #if UNITY_EDITOR //&& false
             var map = s_Templates_Editor;
@@ -140,7 +153,7 @@ namespace Saro.BT
         {
             if (runtimeTree.Poolable)
             {
-                if (s_CachedRuntimeTrees.TryGetValue(runtimeTree.id, out var pool))
+                if (s_CachedRuntimeTrees.TryGetValue(runtimeTree.uid, out var pool))
                 {
                     pool.Return(runtimeTree);
                 }
@@ -154,7 +167,7 @@ namespace Saro.BT
         [Conditional("UNITY_EDITOR")]
         static void Check(BehaviorTree runtimeTree)
         {
-            if (TryGetTemplateTree(runtimeTree.id, out var templateTree))
+            if (TryGetTemplateTree(runtimeTree.uid, out var templateTree))
             {
                 // check nodes
                 for (int i = 0; i < runtimeTree.nodes.Length; i++)

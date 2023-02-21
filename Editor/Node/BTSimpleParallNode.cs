@@ -24,7 +24,7 @@ namespace Saro.BT.Designer
 
         protected override Port CreateChildPort()
         {
-            var port = Port.Create<Edge>(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(Port));
+            var port = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(Port));
             port.portName = "Child";
             return port;
         }
@@ -35,7 +35,7 @@ namespace Saro.BT.Designer
 
             if (graphView.EdgeConnectorListener != null)
             {
-                BranchPort.AddManipulator(new EdgeConnector<Edge>(graphView.EdgeConnectorListener));
+                BranchPort.AddManipulator(new EdgeConnector<FlowingEdge>(graphView.EdgeConnectorListener));
             }
         }
 

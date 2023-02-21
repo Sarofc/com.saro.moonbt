@@ -42,13 +42,13 @@ namespace Saro.BT.Designer
 
             if (graphView.EdgeConnectorListener != null)
             {
-                ChildPort.AddManipulator(new EdgeConnector<Edge>(graphView.EdgeConnectorListener));
+                ChildPort.AddManipulator(new EdgeConnector<FlowingEdge>(graphView.EdgeConnectorListener));
             }
         }
 
         protected override Port CreateChildPort()
         {
-            var port = Port.Create<Edge>(Orientation.Horizontal, Direction.Output, Port.Capacity.Multi, typeof(Port));
+            var port = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Multi, typeof(Port));
             port.portName = "Child";
             return port;
         }
