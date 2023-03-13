@@ -50,7 +50,7 @@ namespace Saro.BT
                 var path = AssetDatabase.GUIDToAssetPath(item);
                 var tree = AssetDatabase.LoadAssetAtPath<BehaviorTree>(path);
                 if (tree)
-                    s_Templates_Editor.Add(BTUtility.StringToHash(tree.name), tree);
+                    s_Templates_Editor.Add(tree.uid, tree);
                 else
                     Log.ERROR($"Editor BehaviorTree '{path}' is invalid");
             }
@@ -167,6 +167,8 @@ namespace Saro.BT
         [Conditional("UNITY_EDITOR")]
         static void Check(BehaviorTree runtimeTree)
         {
+            Log.Assert(runtimeTree.uid != 0, $"{runtimeTree.id} is invalid");
+
             if (TryGetTemplateTree(runtimeTree.uid, out var templateTree))
             {
                 // check nodes
@@ -185,7 +187,7 @@ namespace Saro.BT
             }
             else
             {
-                Log.ERROR("[BT] fatal error");
+                Log.ERROR($"[BT] tree '{runtimeTree.id}' not found");
             }
         }
 

@@ -187,6 +187,8 @@ namespace Saro.BT
             newTree.name = name;
 #endif
             newTree.id = id;
+            newTree.uid = uid;
+
             newTree.nodes = new BTNode[nodes.Length];
             for (int i = 0; i < nodes.Length; i++)
             {
