@@ -1,12 +1,13 @@
-﻿using Saro.Entities;
+﻿#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
+using Saro.Entities;
 using Saro.Pool;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
+using System.Threading.Tasks;
 
 namespace Saro.BT
 {
@@ -20,6 +21,25 @@ namespace Saro.BT
         private readonly static Dictionary<int, ObjectPool<BehaviorTree>> s_CachedRuntimeTrees = new();
 
         public bool Poolable { get; private set; }
+
+        public static async Task LoadAsync()
+        {
+            BehaviorTree.Load(await new JsonDataProvider<BehaviorTree>().LoadAsync());
+        }
+
+        public static void Load()
+        {
+            BehaviorTree.Load(new JsonDataProvider<BehaviorTree>().Load());
+        }
+
+        [Conditional("UNITY_EDITOR")]
+        public static void Save()
+        {
+#if UNITY_EDITOR
+            new JsonDataProvider<BehaviorTree>().Save();
+            AssetDatabase.Refresh();
+#endif
+        }
 
         public static void Load(List<BehaviorTree> list)
         {

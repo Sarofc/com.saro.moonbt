@@ -206,6 +206,7 @@ namespace Saro.BT
         }
 
 #if UNITY_EDITOR
+        [JsonIgnore]
         public string DebugName
         {
             get

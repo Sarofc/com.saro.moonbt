@@ -139,8 +139,7 @@ namespace Saro.BT.Designer
                 btnExport.clicked += () =>
                 {
                     // new
-                    new JsonDataProvider<BehaviorTree>().Save();
-                    AssetDatabase.Refresh();
+                    BehaviorTree.Save();
 
                     // old
                     //if (CurretnTree != null)
